@@ -1,7 +1,8 @@
 #include <stdio.h>
 #include <time.h>
+#include <stdlib.h>
 #include "lock.h"
-
+#define NUM_OF_THREADS 4
 int g_lock = 0;
 
 inline void asm_inc(int *val){
@@ -19,7 +20,7 @@ void lock(){
 			break;
 		else{
 			asm_dec(&g_lock);
-			sleep(1);
+			sleep(rand()%NUM_OF_THREADS);
 		}
 	}
 	while(1);
