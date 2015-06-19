@@ -1,16 +1,15 @@
 #include <stdio.h>
 #include <time.h>
+#include "lock.h"
 
-int get_recoure(){
-	printf("hello world\n");
-	return 1;
-}
 int g_lock = 0;
 
-void asm_inc(int *val){
+inline void asm_inc(int *val){
 	asm("incl %0"::"m"(*val));
+	//int reg = 1;
+	//asm("cmpxchgl %1, %0" ::"m"(*val),"r"(reg));
 }
-void asm_dec(int *val){
+inline void asm_dec(int *val){
 	asm("decl %0"::"m"(*val));
 }
 void lock(){
@@ -28,10 +27,5 @@ void lock(){
 void unlock(){
 	asm_dec(&g_lock);
 }
-//get resoure with lock
-int main(int argc ,char * argv[]){
-	lock();
-	get_recoure();
-	unlock();
-}
+
 
