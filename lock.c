@@ -16,12 +16,10 @@ void asm_dec(int *val){
 void lock(){
 	do{
 		asm_inc(&g_lock);
-		printf("after inc g_lock = %d\n",g_lock);
 		if (g_lock == 1)
 			break;
 		else{
 			asm_dec(&g_lock);
-			printf("g_lock = %d\n",g_lock);
 			sleep(1);
 		}
 	}
