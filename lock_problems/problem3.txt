@@ -7,7 +7,7 @@ turn = 2;	|turn = 1
 q1   = 1;    	|q2   = 1;
 		|
 while(		|while(
-turn != 2 && q2	|turn != 1 && q1
+turn == 2 && q2	|turn == 1 && q1
 )		|) 
 	continu;|	continu;
 		|
