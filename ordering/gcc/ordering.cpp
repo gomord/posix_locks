@@ -1,6 +1,7 @@
 #include <pthread.h>
 #include <semaphore.h>
 #include <stdio.h>
+#include <string.h>
 
 // Set either of these to 1 to prevent CPU reordering
 #define USE_CPU_FENCE              0
@@ -67,11 +68,25 @@ unsigned int MersenneTwister::integer()
 //-------------------------------------
 //  Main program, as decribed in the post
 //-------------------------------------
+//#define RANDOM_SIZE 0x2000000
+#define RANDOM_SIZE 0x200000
+volatile int randoms[RANDOM_SIZE];
+void clear_randoms(int arr){
+	int i;
+	for(i=0;0 && i<sizeof(randoms)/4;i+=32){
+		randoms[i] = 1;
+	}
+	//memset((void *)randoms,0,sizeof(randoms));
+}
 sem_t beginSema1;
 sem_t beginSema2;
+sem_t beginSema1lo;
+sem_t beginSema2lo;
 sem_t endSema;
+#define X 0
+#define Y 64
+int xy[256];
 
-int X, Y;
 int r1, r2;
 
 void *thread1Func(void *param)
@@ -79,17 +94,21 @@ void *thread1Func(void *param)
     MersenneTwister random(1);
     for (;;)
     {
+	clear_randoms(1);
+	xy[Y] = 0;
+	sem_post(&beginSema2lo);
+        sem_wait(&beginSema1lo);  // Wait for signal
         sem_wait(&beginSema1);  // Wait for signal
         while (random.integer() % 8 != 0) {}  // Random delay
 
         // ----- THE TRANSACTION! -----
-        X = 1;
+        xy[X] = 1;
 #if USE_CPU_FENCE
         asm volatile("mfence" ::: "memory");  // Prevent CPU reordering
 #else
         asm volatile("" ::: "memory");  // Prevent compiler reordering
 #endif
-        r1 = Y;
+        r1 = xy[Y];
 
         sem_post(&endSema);  // Notify transaction complete
     }
@@ -101,17 +120,21 @@ void *thread2Func(void *param)
     MersenneTwister random(2);
     for (;;)
     {
+	clear_randoms(2);
+	xy[X] = 0;
+	sem_post(&beginSema1lo);
+        sem_wait(&beginSema2lo);  // Wait for signal
         sem_wait(&beginSema2);  // Wait for signal
         while (random.integer() % 8 != 0) {}  // Random delay
 
         // ----- THE TRANSACTION! -----
-        Y = 1;
+        xy[Y] = 1;
 #if USE_CPU_FENCE
         asm volatile("mfence" ::: "memory");  // Prevent CPU reordering
 #else
         asm volatile("" ::: "memory");  // Prevent compiler reordering
 #endif
-        r2 = X;
+        r2 = xy[X];
 
         sem_post(&endSema);  // Notify transaction complete
     }
@@ -123,6 +146,8 @@ int main()
     // Initialize the semaphores
     sem_init(&beginSema1, 0, 0);
     sem_init(&beginSema2, 0, 0);
+    sem_init(&beginSema1lo, 0, 0);
+    sem_init(&beginSema2lo, 0, 0);
     sem_init(&endSema, 0, 0);
 
     // Spawn the threads
@@ -146,8 +171,8 @@ int main()
     for (int iterations = 1; ; iterations++)
     {
         // Reset X and Y
-        X = 0;
-        Y = 0;
+        //xy[X] = 0;
+        //xy[Y] = 0;
         // Signal both threads
         sem_post(&beginSema1);
         sem_post(&beginSema2);
@@ -155,10 +180,12 @@ int main()
         sem_wait(&endSema);
         sem_wait(&endSema);
         // Check if there was a simultaneous reorder
+	//printf("%d\n",iterations);
         if (r1 == 0 && r2 == 0)
         {
             detected++;
-            printf("%d reorders detected after %d iterations\n", detected, iterations);
+            printf("%d reorders detected after %d iterations avg %f\n",
+		detected, iterations,(float)iterations/detected);
         }
     }
     return 0;  // Never returns
