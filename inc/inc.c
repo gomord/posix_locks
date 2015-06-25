@@ -8,13 +8,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define NTHREADS 2
+#define NTHREADS 4
 #define NLOOP 0xfffffff
 #define ASM_INC 0
 #define PER_CPU 0
-#define PER_CACH 1
+#define PER_CACH 64
 #define MUL_PROC 1
-#define LOCK "lock "
+#define LOCK ""//"lock "
 unsigned int g_inc=0;
 unsigned int *g_incs;
 pthread_t threads[NTHREADS];
@@ -39,9 +39,7 @@ void *do_inc(void *id) {
 #if ASM_INC
 		asm(LOCK "incl %0"::"m"(g_inc));
 #elif PER_CPU
-		g_incs[(int)id]++;
-#elif PER_CACH
-		g_incs[(int)id*64]++;
+		g_incs[(int)id*PER_CACH]++;
 #else
 		g_inc++;
 #endif
@@ -51,6 +49,7 @@ void *do_inc(void *id) {
 int main(int argc, char *argv[]) {
 	void *status;
 	int rc, i,t, j, detachstate;
+	int sum;
 	g_incs = (int*)malloc(sizeof(int)*NTHREADS*64);
 	if(g_incs == NULL){
 		exit(0);
@@ -83,8 +82,16 @@ int main(int argc, char *argv[]) {
 	}
 	pthread_attr_destroy(&attr);
 	//pthread_attr_destroy(&attr);
+	for(i=0;i<NTHREADS;i++){
+		sum+=g_incs[i*PER_CACH];
+	}
 	printf("inc = %u, from %u, %% %f \n",
+#if PER_CPU
+		sum,NLOOP*NTHREADS,(double)sum*100/(NLOOP*NTHREADS));
+#else
 		g_inc,NLOOP*NTHREADS,(double)g_inc*100/(NLOOP*NTHREADS));
+#endif
+
 	free(g_incs);
 	pthread_exit(NULL);
 
