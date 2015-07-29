@@ -1,0 +1,830 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html><head><title>How programs get run [LWN.net]</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" icon"="" href="/images/favicon.png" type="image/png">
+        <link rel="alternate" type="application/rss+xml" title="LWN.net headlines" href="http://lwn.net/headlines/newrss">
+<link rel="alternate" type="application/rss+xml" title="Comments posted to this article" href="http://lwn.net/headlines/630727/">
+        <link rel="stylesheet" href="How%20programs%20get%20run%20%5BLWN.net%5D_files/lwn.css">
+<link rel="stylesheet" href="How%20programs%20get%20run%20%5BLWN.net%5D_files/nosub.css">
+
+        
+<script src="How%20programs%20get%20run%20%5BLWN.net%5D_files/ados.js" async="" type="text/javascript"></script><script type="text/javascript">var p="http",d="static";if(document.location.protocol=="https:"){p+="s";d="engine";}var z=document.createElement("script");z.type="text/javascript";z.async=true;z.src=p+"://"+d+".adzerk.net/ados.js";var s=document.getElementsByTagName("script")[0];s.parentNode.insertBefore(z,s);</script>
+<script type="text/javascript">
+var ados_keywords = ados_keywords || [];
+if( location.protocol=='https:' ) {
+        ados_keywords.push('T:SSL');
+} else {
+        ados_keywords.push('T:HTTP');
+}
+
+var ados = ados || {};
+ados.run = ados.run || [];
+ados.run.push(function() {
+
+ados_add_placement(4669, 20979, "azk13321_leaderboard", 4).setZone(16026);
+
+ados_add_placement(4669, 20979, "azk93271_right_zone", [5,10,6]).setZone(16027);
+
+ados_add_placement(4669, 20979, "azk31017_tracking", 20).setZone(20995);
+
+
+
+ados_setKeywords(ados_keywords.join(', ')); 
+ados_load();
+});</script>
+
+        </head>
+        <body link="Blue" vlink="Green" alink="Green" bgcolor="#ffffff">
+        <table class="Page">
+<tbody><tr>
+<td class="LeftColumn">
+
+        <center>
+        <a href="https://lwn.net/"><img src="How%20programs%20get%20run%20%5BLWN.net%5D_files/lcorner.png" alt="LWN.net Logo" height="120" width="153" border="0"></a>
+        </center>
+        <p>
+        <script type="text/javascript"><!--
+google_ad_client = "pub-4358676377058562";
+google_ad_width = 120;
+google_ad_height = 240;
+google_ad_format = "120x240_as";
+google_ad_type = "text_image";
+//2007-10-07: side ads
+google_ad_channel = "0946045135";
+google_color_border = "ffcc99";
+google_color_bg = "ffcc99";
+google_color_link = "0000FF";
+google_color_text = "000000";
+google_color_url = "008000";
+//-->
+</script>
+<script type="text/javascript" src="How%20programs%20get%20run%20%5BLWN.net%5D_files/show_ads.js">
+</script>
+</p><p>
+</p><div class="SideBox">
+<p class="Header">Not logged in</p>
+<p><a href="https://lwn.net/login">Log in now</a></p>
+<p><a href="https://lwn.net/newaccount">Create an account</a></p>
+<p><a href="https://lwn.net/subscribe/Info">Subscribe to LWN</a></p></div>
+
+<div class="SideBox">
+<p class="Header">Weekly Edition</p>
+<p><a href="https://lwn.net/Articles/630262/">Return to the Kernel page</a></p></div>
+
+<div class="SideBox">
+<p class="Header">Recent Features</p>
+<p><a href="https://lwn.net/Articles/651266/">LWN.net Weekly Edition for July 23, 2015</a></p>
+<p><a href="https://lwn.net/Articles/651833/">Django Girls one year later</a></p>
+<p><a href="https://lwn.net/Articles/651700/">Domesticating applications, OpenBSD style</a></p>
+<p><a href="https://lwn.net/Articles/650653/">LWN.net Weekly Edition for July 16, 2015</a></p>
+<p><a href="https://lwn.net/Articles/650904/">Python 3.5 is on its way</a></p></div>
+
+<div class="SideBox">
+<p><a href="https://lwn.net/Articles/630727/?format=printable">Printable page</a></p></div>
+
+</td><!-- LC -->
+
+<td><table><tbody><tr>
+<td class="MidColumn">
+           <table class="TopNavigation">
+
+<!-- First row - content links -->
+<tbody><tr>
+  <td class="NavLink"><a href="https://lwn.net/current/">Weekly edition</a></td>
+  <td class="NavLink">
+	<a href="https://lwn.net/Kernel/">Kernel</a></td>
+  <td class="NavLink"><a href="https://lwn.net/Security/">Security</a></td>
+  <td class="NavLink">
+	<a href="http://lwn.net/Distributions/">Distributions</a></td>
+  <td class="NavLink"><a href="https://lwn.net/op/FAQ.lwn#contact">Contact Us</a> </td>
+  <td class="NavLink"><a href="https://lwn.net/Search/">Search</a> </td>
+</tr>
+<!-- Second row: navigation links -->
+<tr>
+  <td class="NavLink"><a href="https://lwn.net/Archives/">Archives</a></td>
+  <td class="NavLink"><a href="https://lwn.net/Calendar/">Calendar</a></td>
+  <td class="NavLink"><a href="https://lwn.net/subscribe/Info">Subscribe</a></td>
+  <td class="NavLink"><a href="https://lwn.net/op/AuthorGuide.lwn">Write for LWN</a></td>
+  <td class="NavLink"><a href="https://lwn.net/op/FAQ.lwn">LWN.net FAQ</a></td>
+  <td class="NavLink"><a href="https://lwn.net/op/Sponsors.lwn">Sponsors</a></td>
+</tr>
+
+</tbody></table>
+</td><td></td></tr>
+<tr><td colspan="2" class="MCTopBanner">
+<div id="azk13321_leaderboard"></div></td></tr><tr><td class="MidColumn">
+<div class="PageHeadline">
+<h1>How programs get run</h1>
+</div>
+<div class="ArticleText">
+<div class="GAByline">
+           <p>January 28, 2015</p>
+           <p>This article was contributed by David Drysdale</p>
+           </div>
+<p>
+      This is the first in pair of articles that describe how the kernel runs programs: what happens under the covers
+      when a user program invokes
+      the <a href="http://man7.org/linux/man-pages/man2/execve.2.html"><tt>execve()</tt></a> system call?
+      I recently worked on the implementation of a new <a href="http://man7.org/linux/man-pages/man2/execveat.2.html"><tt>execveat()</tt></a> system call, which is a close variant
+      of <tt>execve()</tt> that allows the caller to specify the invoked program by a combination of file descriptor
+      and path, as with other <tt>*at()</tt> system calls.  (This will, in turn, enable an implementation of
+      the <a href="http://man7.org/linux/man-pages/man3/fexecve.3.html"><tt>fexecve()</tt></a> library function that
+      doesn't <a href="http://man7.org/linux/man-pages/man3/fexecve.3.html#NOTES">rely on</a> access to
+      the <tt>/proc</tt> filesystem, which is important for sandboxed environments such
+      as <a href="https://lwn.net/Articles/604015/">Capsicum</a>.)
+    </p>
+    <p>
+      Along the way, I explored the existing <tt>execve()</tt> implementation, and so these articles
+      present the details of that functionality.  In this one, we'll focus on the general mechanisms
+      that the kernel uses for program invocation, which allow for different program formats; the second
+      article will focus on the details of running ELF binaries.
+    </p>
+
+
+    <h4>The view from user space</h4>
+    <p>
+      Before diving into the kernel, we'll start by exploring the behavior of program execution from user space (there's
+      also a good description of this behavior in chapter 27 of <a href="http://man7.org/tlpi/index.html"><i>The Linux
+      Programming Interface</i></a>).  For Linux versions up to and including 3.18, the only system call that invokes a new
+      program is <tt>execve()</tt>, which has the
+      following prototype:
+    
+
+<tt></tt></p><pre><tt>    int execve(const char *filename, char *const argv[], char *const envp[]);
+</tt></pre>
+<p>
+      The <tt>filename</tt> argument specifies the program to be executed, and the <tt>argv</tt> and <tt>envp</tt>
+      arguments are NULL-terminated lists that specify the command line arguments and environment variables for the new
+      program.  A simple <a href="https://lwn.net/Articles/630754/#do_execve">skeleton
+    driver program (<tt>do_execve.c</tt>)</a> allows us to explore how this
+    behaves, by 
+      feeding in <tt>"zero"</tt>, <tt>"one"</tt>, <tt>"two"</tt> as arguments
+      and <tt>"ENVVAR1=1"</tt>, <tt>"ENVVAR2=2"</tt> as environment variables. To see the result in the invoked program,
+      we use <a href="https://lwn.net/Articles/630754/#show_info">another simple program (<tt>show_info.c</tt>)</a> that just outputs its command-line arguments
+      (<tt>argv</tt>) and environment
+      (<a href="http://man7.org/linux/man-pages/man7/environ.7.html"><tt>environ</tt></a>).
+    </p>
+    <p>
+      Putting these together gives the expected result — the arguments and environment are passed through to the
+      invoked program. Notice, though, that the <tt>argv[0]</tt> for the invoked binary is just the value specified by
+      the caller of <tt>execve()</tt>; having the program's name in <tt>argv[0]</tt> isn't a convention that's required or
+      policed by <tt>execve()</tt> itself, at least for binaries.
+
+<tt></tt></p><pre><tt>    % ./do_execve ./show_info
+    argv[0] = 'zero'
+    argv[1] = 'one'
+    argv[2] = 'two'
+    ENVVAR1=1
+    ENVVAR2=2
+</tt></pre>
+    <p>
+      Things change slightly when the program being invoked is a script rather than a binary program.  To explore this,
+      we use a <a href="https://lwn.net/Articles/630754/#show_info.sh">shell script
+      equivalent (<tt>show_info.sh</tt>)</a> of our environment-outputting
+      program; 
+      putting this together with the original program that invokes <tt>execve()</tt>, we see a couple of differences:
+    </p>
+<tt><pre>    % ./do_execve ./show_info.sh
+    $0 = './show_info.sh'
+    $1 = 'one'
+    $2 = 'two'
+    ENVVAR1=1
+    ENVVAR2=2
+    PWD=/home/drysdale/src/lwn/exec
+</pre></tt>
+    <p>
+      First, the environment has gained an extra <tt>PWD</tt> value, indicating the current directory. Secondly, the
+      initial argument to the script is now the script filename, rather than the <tt>"zero"</tt> value that the invoker
+      specified.  A further experiment reveals that the <tt>/bin/sh</tt> script interpreter added the <tt>PWD</tt>
+      environment variable, but the kernel itself modified the arguments:
+    </p>
+<tt><pre>    % cat ./wrapper
+    #!./show_info
+    
+    % ./do_execve ./wrapper
+    argv[0] = './show_info'
+    argv[1] = './wrapper'
+    argv[2] = 'one'
+    argv[3] = 'two'
+    ENVVAR1=1
+    ENVVAR2=2
+</pre></tt>
+    <p>
+      More specifically, the kernel has removed the first (<tt>"zero"</tt>) argument and replaced it with two arguments
+      — the name of the script interpreter program (taken from the first line of the script) and the name
+      of the invoked file (which holds the script text).  If the first line of the script also includes command-line
+      arguments for the interpreter (for example, <tt>awk</tt> needs an <tt>-f</tt> option to treat its input as a
+      filename rather than script text), a third extra argument is also inserted, holding all of the extra options:
+    </p>
+<tt><pre>    % cat ./wrapper_args
+    #!./show_info -a -b -c
+
+    % ./do_execve ./wrapper_args
+    argv[0] = './show_info'
+    argv[1] = '-a -b -c'
+    argv[2] = './wrapper_args'
+    argv[3] = 'one'
+    argv[4] = 'two'
+    ENVVAR1=1
+    ENVVAR2=2
+</pre></tt>
+    <p>
+      Up to a point, we can also repeat this pop-one, push-two alteration of the arguments, by invoking scripts that
+      wrap scripts and so on; each such alteration effectively pushes the wrapper script name in at <tt>argv[1]</tt>:
+    </p>
+<tt><pre>    argv[0]:  'zero'=&gt;'./wrapper4'=&gt;'./wrapper3'=&gt;'./wrapper2'=&gt;'./wrapper' =&gt;'./show_info'
+    argv[1]:  'one'   './wrapper5'  './wrapper4'  './wrapper3'  './wrapper2'  './wrapper'
+    argv[2]:  'two'   'one'         './wrapper5'  './wrapper4'  './wrapper3'  './wrapper2'
+    argv[3]:          'two'         'one'         './wrapper5'  './wrapper4'  './wrapper3'
+    argv[4]:                        'two'         'one'         './wrapper5'  './wrapper4'
+    argv[5]:                                      'two'         'one'         './wrapper5'
+    argv[6]:                                                    'two'         'one'
+    argv[7]:                                                                  'two'
+</pre></tt>
+    <p>
+      However, this doesn't continue forever — once there are too many levels of wrappers, the process fails with <tt>ELOOP</tt>:
+    </p>
+<tt><pre>    % ./do_execve ./wrapper6
+    Failed to execute './wrapper6', Too many levels of symbolic links
+</pre></tt>
+
+
+    <h4>Into the kernel: <tt>struct linux_binprm</tt></h4>
+    <p>
+      Now we move into kernel space and begin delving into the code that implements the <tt>execve()</tt> system call. A
+      <a href="https://lwn.net/Articles/604515/">previous article</a> explored the general system call machinery
+      (and the special wrinkles needed for <tt>execve()</tt>), so
+      we can pick up the story at the <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1430"><tt>do_execve_common()</tt></a> function
+      in <tt>fs/exec.c</tt>.  The main purpose of the code in this function
+    is to <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1463">build</a>
+    a new 
+      <a href="http://lxr.free-electrons.com/source/include/linux/binfmts.h?v=3.18#L14"><tt>struct linux_binprm</tt></a> instance that describes the
+      current program invocation operation.  In the structure:
+    </p>
+    <ul class="spacylist">
+      <li>The <tt>file</tt> field is <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1481">set</a> to a freshly opened <tt>struct file</tt>
+        for the program being invoked; this allows the kernel to read the file contents and decide how to handle the
+        file.</li>
+	
+      <li>The <tt>filename</tt> and <tt>interp</tt> fields are <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1482">both set</a> to the
+        name of the file holding the program; we'll see later why there are
+        two distinct fields here.</li>
+	
+      <li>The <tt>bprm_mm_init()</tt> function <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L366">allocates</a>
+        and <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L268">sets
+        up</a> the
+        associated <a href="http://lxr.free-electrons.com/source/include/linux/mm_types.h#L345"><tt>struct mm_struct</tt></a> and
+        <a href="http://lxr.free-electrons.com/source/include/linux/mm_types.h#L247"><tt>struct vm_area_struct</tt></a> data structures in preparation
+        for managing the virtual memory of the new program.  In particular, the new program's virtual memory ends at
+        the <a href="http://lxr.free-electrons.com/source/arch/x86/include/asm/processor.h?v=3.18#L912">highest possible address</a> for the
+        architecture; its stack will grow downward from there.</li>
+	
+      <li>The <tt>p</tt> field is <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L281">set to point at the end of memory space</a> for the new program,
+        but leaves space for a NULL pointer as an end marker for the stack.
+        The value of <tt>p</tt> will be updated (downward) as more 
+        information is added to the new program's stack.</li>
+	
+      <li>The <tt>argc</tt> and <tt>envc</tt> fields <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1488">are set</a> to hold the counts of arguments
+        and environment values so that this information can be propagated to the new program later in the invocation
+        process.</li>
+	
+      <li>The <tt>unsafe</tt> field is <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1217">set up</a> to hold a bitmask of reasons why the program
+        execution might not be safe; for example, if the process is
+        being traced with <a href="http://man7.org/linux/man-pages/man2/ptrace.2.html"><tt>ptrace()</tt></a> or has the
+        <a href="https://lwn.net/Articles/475678/"><tt>PR_SET_NO_NEW_PRIVS</tt> bit</a>
+        set.  The Linux Security Module (LSM) may subsequently use this
+        information to deny the 
+        program execution operation.</li>
+	
+      <li>The <tt>cred</tt> field is a <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1147">separately
+        allocated</a> object of type
+        <a href="http://lxr.free-electrons.com/source/include/linux/cred.h?v=3.18#L102"><tt>struct cred</tt></a> that
+        holds information about the credentials for the new program.  These are generally
+        <a href="http://lxr.free-electrons.com/source/kernel/cred.c?v=3.18#L250">inherited</a>
+        from the process that called <tt>execve()</tt>, but
+        are updated to allow for <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1274">setuid</a> / <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1280">setgid</a> bits and
+        other complications. The presence of setuid/setgid bits also
+        disallows a collection of <a href="http://lxr.free-electrons.com/source/include/uapi/linux/personality.h?v=3.18#L30">compatibility
+        features</a> because they have an adverse effect on security; the
+        <tt>per_clear</tt> field records the bits in the process's <a href="http://man7.org/linux/man-pages/man2/personality.2.html">personality</a>
+        that will be cleared later.
+</li>
+	
+      <li>The <tt>security</tt> field allows an LSM to store LSM-specific
+        information with
+        the <tt>linux_binprm</tt>; the LSM is notified via a call to
+        <a href="http://lxr.free-electrons.com/source/security/security.c?v=3.18#L214"><tt>security_bprm_set_creds()</tt></a> and the
+        <a href="http://lxr.free-electrons.com/source/include/linux/security.h?v=3.18#L202"><tt>bprm_set_creds</tt></a> LSM hook.
+        The <a href="http://lxr.free-electrons.com/source/include/linux/security.h?v=3.18#L1996">default implementation</a> of this hook
+        updates the new program's
+        <a href="http://man7.org/linux/man-pages/man7/capabilities.7.html">Linux capabilities</a>
+        to <a href="http://lxr.free-electrons.com/source/security/commoncap.c?v=3.18#L475">allow for the file capabilities</a> of the program file;
+        other LSM
+        implementations chain this
+        behavior into their own implementations of the hook (e.g. <a href="http://lxr.free-electrons.com/source/security/smack/smack_lsm.c?v=3.18#L676">Smack</a>, 
+        <a href="http://lxr.free-electrons.com/source/security/selinux/hooks.c?v=3.18#L2144">SELinux</a>).</li>
+	
+      <li>The <tt>buf</tt> scratch space is <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1299">filled</a> with the first chunk
+        (<a href="http://lxr.free-electrons.com/source/include/uapi/linux/binfmts.h?v=3.18#L18">128 bytes</a>) of data from the program file. This data
+        will be used later to detect the binary format so it can be
+        processed appropriately.</li>
+	
+    </ul>
+    <p>
+      The parts of this setup process that depend on the particular file that's being executed are performed
+      in an inner <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1253"><tt>prepare_binprm()</tt></a> function; this function can be called
+      again later to update those fields if a different file (e.g. a script interpreter) is actually run.
+    </p>
+    <p>
+      Finally, information about the program invocation is copied into the top of new program's stack, using the local
+      <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L453"><tt>copy_strings()</tt></a>
+      and <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L544"><tt>copy_strings_kernel()</tt></a> utility functions.  First, the program
+      filename is pushed to the stack (and its location is <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1504">saved</a> in the <tt>exec</tt> field of
+      the <tt>linux_bprm</tt> instance), followed by all of the environment values, then by all of the arguments.  At
+      the end of this process, the stack looks like:
+    </p>
+<tt><pre>    ---------Memory limit---------
+    NULL pointer
+    program_filename string
+    envp[envc-1] string
+    ...
+    envp[1] string
+    envp[0] string
+    argv[argc-1] string
+    ...
+    argv[1] string
+    argv[0] string
+</pre></tt>
+
+
+    <h4>Binary format handler iteration: <tt>struct linux_binfmt</tt></h4>
+    <p>
+      With a complete <tt>struct linux_binprm</tt> in hand, the real business of program execution is performed
+      in <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1405"><tt>exec_binprm()</tt></a> and (more importantly)
+      <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1352"><tt>search_binary_handler()</tt></a>.  This code
+      <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1369">iterates</a> over a list of
+      <a href="http://lxr.free-electrons.com/source/include/linux/binfmts.h#L70"><tt>struct linux_binfmt</tt></a> objects, each of which provides a handler for a particular
+      format of binary programs.  A binary handler could potentially be defined in a kernel module, so the code
+      calls <a href="http://lxr.free-electrons.com/source/kernel/module.c?v=3.18#L945"><tt>try_module_get()</tt></a>
+      for each format to ensure the relevant code can't be unloaded by another task while it's being used here.
+    </p>
+    <p>
+      For each <tt>struct linux_binfmt</tt> handler object, the <tt>load_binary()</tt> function pointer is called, passing in
+      the <tt>linux_binprm</tt> object. If the handler code supports the binary format, it does whatever is needed to
+      prepare the program for execution and returns success (&gt;= 0).  Otherwise, the handler returns a failure code (&lt; 0)
+      and iteration continues with the next handler.
+    </p>
+    <p>
+      Execution of a particular program may itself rely on execution of a different program; the obvious example is
+      executable scripts, which need to invoke the script interpreter.  To cope with this,
+      the <tt>search_binary_handler()</tt> code can be called recursively, re-using the <tt>struct linux_binprm</tt>
+      object.  However, recursion depth is <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1358">limited</a> to prevent infinite
+      recursion, giving the <tt>ELOOP</tt> error behavior seen earlier.
+    </p>
+    <p>
+      The system's LSM also gets a say in the operation; before the iteration over binary formats starts, the
+      <a href="http://lxr.free-electrons.com/source/include/linux/security.h?v=3.18#L214"><tt>bprm_check_security</tt></a> LSM hook is
+      <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1362">triggered</a>, allowing the LSM to make a decision on whether to allow the
+      operation.  To do so,  it may use the state it stored in the <tt>linux_binprm.security</tt> field earlier.
+    </p>
+    <p>
+      At the end of the iteration, if no formats that can handle the
+    program have been 
+      found (and the program appears to be binary rather than text, at least
+      <a href="http://lxr.free-electrons.com/source/fs/exec.c?v=3.18#L1392">according to the first four bytes</a>),
+      then the code will also attempt to load a module named <tt>"binfmt-<i>XXXX</i>"</tt>, where
+      XXXX is the hex value of bytes three and four in the program file.
+    This is an 
+      <a href="http://www.tldp.org/HOWTO/Kerneld/configuration.html#BINFMT">old mechanism</a>
+      (added in 1996 for Linux 1.3.57) to allow for a more dynamic
+      way of associating binary format handlers with formats; the more recent <tt>binfmt_misc</tt> mechanism
+      (described below) allows a more flexible way of doing something similar.
+    </p>
+
+
+    <h4>Binary formats</h4>
+    <p>
+      So what are the binary formats available in the standard kernel?  A search for
+      code that registers instances of <tt>struct linux_binfmt</tt> (via
+      <a href="http://lxr.free-electrons.com/source/include/linux/binfmts.h?v=3.17#L82"><tt>register_binfmt()</tt></a> and
+      <a href="http://lxr.free-electrons.com/source/include/linux/binfmts.h?v=3.17#L87"><tt>insert_binfmt()</tt></a>)
+      gives us quite a collection of possible formats,  all of which are configured and
+      explained in the <a href="http://lxr.free-electrons.com/source/fs/Kconfig.binfmt"><tt>fs/Kconfig.binfmts</tt></a> file:
+    </p>
+    <ul class="spacylist">
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L108"><tt>binfmt_script.c</tt></a>: Support for interpreted scripts,
+        starting with a <tt>#!</tt> line.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_misc.c?v=3.18#L729"><tt>binfmt_misc.c</tt></a>: Support miscellaneous binary formats,
+        according to runtime configuration.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_elf.c?v=3.18#L2200"><tt>binfmt_elf.c</tt></a>: Support for ELF format binaries.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_aout.c?v=3.18#L412"><tt>binfmt_aout.c</tt></a>: Support for traditional a.out format binaries.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_flat.c?v=3.18#L945"><tt>binfmt_flat.c</tt></a>: Support
+        for <a href="http://elinux.org/UClinux_Shared_Library#Shared_FLAT">flat format</a> binaries.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_em86.c?v=3.18#L102"><tt>binfmt_em86.c</tt></a>: Support for Intel ELF binaries running
+        on Alpha machines.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_elf_fdpic.c?v=3.18#L94"><tt>binfmt_elf_fdpic.c</tt></a>: Support for
+        <a href="http://elinux.org/UClinux_Shared_Library#FDPIC_ELF">ELF FDPIC</a> binaries.</li>
+      <li><a href="http://lxr.free-electrons.com/source/fs/binfmt_som.c?v=3.18#L286"><tt>binfmt_som.c</tt></a>: Support for SOM format binaries (an HP/UX
+        PA-RISC format).</li>
+    </ul>
+    <p>
+      (plus a couple
+      of other architecture-specific formats).
+    </p>
+    <p>
+      The next  sections will examine the most important of these: interpreted scripts and
+      the "miscellaneous" mechanism for supporting arbitrary formats; the next article
+      will examine the ELF binary format — which is typically where all program execution ends up.
+    </p>
+
+
+    <h4>Script invocation: <tt>binfmt_script.c</tt></h4>
+    <p>
+      Files that start with the character sequence <tt>#!</tt> (and have the execute bit set) are treated as scripts,
+      handled by the <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c"><tt>fs/binfmt_script.c</tt></a> handler.  After checking those first two
+      bytes, this code parses the rest of the script-invocation line, splitting it into an interpreter
+      name (everything after <tt>#!</tt> up to the first white space) and possible arguments (everything else up to the
+      end of the line, stripping external white space).
+    </p>
+    <p>
+      (One detail to note: back when the <tt>struct linux_binprm</tt> object was created, only the first 128 bytes of the
+      program were retrieved.  This means that if the interpreter name and arguments are longer than this, the
+      results will be truncated.)
+    </p>
+    <p>
+      With these in hand, the code then <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L69">removes <tt>argv[0]</tt></a> from
+      the top of the new program's stack (i.e. at the lowest address), and in its place pushes the following,
+      adjusting the <tt>argc</tt> value in the <tt>linux_binprm</tt> object along the way:
+    </p>
+    <ul class="spacylist">
+      <li>the <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L72">program name</a></li>
+      <li>(optionally) the <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L76">collected interpreter arguments</a></li>
+      <li>the <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L80">name of the interpreter program</a></li>
+    </ul>
+    <p>
+      Taken together, this explains the user space behavior we observed at the beginning of the article; our new
+      program's stack is modified to look like:
+    </p>
+<tt><pre>    ---------Memory limit---------
+    NULL pointer
+    program_filename string
+    envp[envc-1] string
+    ...
+    envp[1] string
+    envp[0] string
+    argv[argc-1] string
+    ...
+    argv[1] string
+    program_filename string
+    ( interpreter_args )
+    interpreter_filename string
+</pre></tt>
+    <p>
+      The code also <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L83">changes the <tt>interp</tt> value</a> in
+      the <tt>linux_binprm</tt> structure so that it references the interpreter filename, rather than the script filename.
+      This explains why the <tt>linux_binprm</tt> structure refers to two strings: one (<tt>interp</tt>) is the program
+      that we currently want to execute, and one is the name (<tt>filename</tt>) that was originally invoked in
+      the <tt>execve()</tt> call.  Along similar lines, the <tt>file</tt> field in the <tt>linux_binprm</tt> is also
+      <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L94">updated</a> to reference the new interpreter program, and the first
+      128 bytes of its contents <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L95">read into</a> the <tt>buf</tt> scratch
+      space.
+    </p>
+    <p>
+      The script handler code then <a href="http://lxr.free-electrons.com/source/fs/binfmt_script.c?v=3.18#L98">recurses</a>
+      into <tt>search_binary_handler()</tt> to repeat the whole process for the script interpreter program.
+      If the interpreter is itself a script, then the <tt>interp</tt> value will be changed once again
+      but the <tt>filename</tt> will stay unchanged.
+    </p>
+
+
+    <h4>Miscellaneous interpreter detection: <tt>binfmt_misc.c</tt></h4>
+    <p>
+      We saw previously that early versions of the Linux kernel supported a rough-and-ready way of dynamically adding
+      format support, by hunting for a kernel module with a name containing the early bytes of the binary.
+      That's not particularly convenient — only searching on a couple of bytes is very limited (compare the
+      <a href="https://github.com/file/file/tree/master/magic/Magdir">vast range of detection signatures</a> that the
+      <a href="http://man7.org/linux/man-pages/man1/file.1.html"><tt>file</tt></a> command uses) and
+      requiring a kernel module raises the barrier to entry.
+    </p>
+    <p>
+      The <a href="http://lxr.free-electrons.com/source/Documentation/binfmt_misc.txt">miscellaneous binary format handler</a> allows a more flexible
+      and dynamic method of dealing with new formats, by allowing run-time configuration (via a special
+      <a href="http://lxr.free-electrons.com/source/fs/binfmt_misc.c?v=3.18#L727">filesystem</a> mounted under <tt>/proc/sys/fs/binfmt_misc</tt>) to
+      specify:
+    </p>
+    <ul class="spacylist">
+      <li>How to recognize a supported format, based on filename extension
+    or a magic value at a particular offset. (As with 
+      parsing script interpreters, this magic value has to fall within the first 128 bytes of the program file.)</li>
+      <li>The interpreter program to invoke, which will get the program filename passed to it as <tt>argv[1]</tt> (as
+      with script invocation).</li>
+    </ul>
+    <p>
+      A good example of the miscellaneous format handler in use is for <a href="http://lxr.free-electrons.com/source/Documentation/java.txt">Java
+      files</a>: detect <tt>.class</tt> files (based on
+      their <a href="http://docs.oracle.com/javase/specs/jvms/se7/html/jvms-4.html#jvms-4.1"><tt>0xCAFEBABE</tt>
+      prefix</a>) or <tt>.jar</tt> files (based on the <tt>.jar</tt> extension) and
+      automatically invoke the JVM executable on
+      them.  This will require a wrapper script to provide the relevant command-line arguments, as the miscellaneous
+      configuration doesn't allow arguments to be specified — which means that the miscellaneous handler will
+      invoke the script handler, which will then invoke the ELF handler for the JVM executable (and which will probably in
+      turn invoke the dynamic linker <tt>ld.so</tt>, although that's a somewhat different story).
+    </p>
+    <p>
+      Internally, the <a href="http://lxr.free-electrons.com/source/fs/binfmt_misc.c">kernel implementation</a> for this format is similar to the
+      handler for script programs described above, except that there is an initial
+      <a href="http://lxr.free-electrons.com/source/fs/binfmt_misc.c?v=3.18#L85">search for a matching configuration entry</a>,
+      and that configuration is used to make some of the details (such as
+      <a href="http://lxr.free-electrons.com/source/fs/binfmt_misc.c?v=3.18#L145">removing <tt>argv[0]</tt></a>)
+      optional.
+    </p>
+
+
+    <p>
+      The format handlers for both scripts and miscellaneous formats recurse on to attempt to invoke the interpreter
+      program that is needed for that particular format.  This recursion has to end at some point, and on a modern Linux
+      system this is almost always at an ELF binary program — the
+      subject of the next article — stay tuned.
+    </p><hr width="60%" align="left">
+           (<a href="https://lwn.net/login?target=/Articles/630727/">Log in</a> to post comments)
+           <p>
+           
+</p></div> <!-- ArticleText -->
+<p><a name="Comments"></a>
+
+<a name="CommAnchor631028"></a>
+</p><div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Jan 29, 2015 6:16 UTC (Thu) by <b>wahern</b> (subscriber, #37304)
+       [<a href="https://lwn.net/Articles/631028/">Link</a>]
+    </p>
+    <blockquote>
+After checking those first two bytes, this code parses the rest of the 
+script-invocation line, splitting it into an interpreter name 
+(everything after #! up to the first white space) and possible arguments
+ (everything else up to the end of the line, stripping external white 
+space).
+</blockquote>
+
+Linux passes the remainder of the line as a _single_ argument. You show 
+this in your example where "-a -b -c" are all located in argv[1]. But 
+you say
+
+<blockquote>
+... a third extra argument is also inserted, holding all of the extra options:
+</blockquote>
+
+<p>
+Those aren't extra options--the plural is misleading. The distinction 
+matters because neither getopt nor getopt_long will parse "-a -b -c" as 
+three separate options. Rather, it'll be parsed as optc='a' and optarg="
+ -b -c", or it will parse as optc='a', optc=' ', optc='-', optc='b', 
+etc. Most likely it'll just fail because your option specification won't
+ match the parse. If a, b, and c are all single options without 
+arguments, then you could put "-abc" on the shebang line. But you can't 
+space them out, and you can't use an option that takes an argument 
+unless the argument is the path of the script, as with the -f option for
+ awk. And you can't mix non-argument with argument options unless the 
+sole argument-taking option comes last. For example, "-abcf".
+</p>
+
+<p>
+OS X, by contrast, will field-split the trailing shebang line in the 
+kernel so that the script "#!./show_info -a -b -c" will print out
+</p>
+
+<pre>argv[0] = './show_info'
+argv[1] = '-a'
+argv[2] = '-b'
+argv[3] = '-c'
+</pre>
+
+<p>
+Solaris is quirky. It will field-split, but only includes the first field. So "#!./show_info -a -b -c" will print out
+</p>
+
+<pre>argv[0] = './show_info'
+argv[1] = '-a'
+</pre>
+
+<p>
+FWIW, OpenBSD 5.5, NetBSD 6.1, and FreeBSD 9.0 all behave like Linux. 
+Which was surprising because I could have sworn that either FreeBSD or 
+NetBSD (or both) would field-split the remainder of the shebang line.
+</p>
+
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631028/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+<div class="Comment">
+
+<a name="CommAnchor631040"></a>
+<div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Jan 29, 2015 9:50 UTC (Thu) by <b>drysdale</b> (subscriber, #95971)
+       [<a href="https://lwn.net/Articles/631040/">Link</a>]
+    </p>
+    <div class="FormattedComment">
+Thanks for the clarification &amp; comparisons with other OSes -- I 
+should have made clear that the bundling together of arguments into 
+argv[1] means that multiple interpreter arguments basically won't work.<br>
+</div>
+
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631040/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+<div class="Comment">
+
+<a name="CommAnchor631137"></a>
+<div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Jan 29, 2015 17:17 UTC (Thu) by <b>vonbrand</b> (guest, #4458)
+       [<a href="https://lwn.net/Articles/631137/">Link</a>]
+    </p>
+    <p>Please do update the article with this information. It is definitely one to bookmark.</p>
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631137/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+
+<a name="CommAnchor631191"></a>
+<div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Jan 29, 2015 21:13 UTC (Thu) by <b>wahern</b> (subscriber, #37304)
+       [<a href="https://lwn.net/Articles/631191/">Link</a>]
+    </p>
+    <p>
+FWIW, Linux and OS X are the only systems I'm aware of that permit 
+recursive shebang execution. Some systems, like Free/Net/OpenBSD, will 
+recursively search for the binary interpreter, but they won't stack the 
+paths of the intervening interpreters. Instead the binary interpreter is
+ only passed the original file path. (And any trailing shebang arguments
+ in the scripts seem to get dropped altogether.) 
+</p>
+
+<p>
+That's not germane to how Linux executes binaries. But I have a feeling 
+this page might end up near the top of the Google results (as all good 
+LWN articles do) for shebang-related queries, so it's worth putting out 
+there.
+</p>
+
+<p>
+Because shells parse scripts line-by-line, if you can come up with a 
+construct that is both valid shell code and valid code in your other 
+language, you can mix interpreters portably. For example, the following 
+is a mixed shell/Lua script which will locate a Lua interpreter. Because
+ both the locations _and_ interpreter names of Lua differ across 
+systems, even across Linux distributions, and even for the same version 
+of Lua, you can't use the #!/usr/bin/env trick to run your Lua scripts 
+and expect it to work even remotely reliably.
+</p>
+
+<pre>#!/bin/sh
+_=[[ # variable assignment in shell, beginning of long string in Lua
+IFS=:
+for D in ${PATH:-$(command -p getconf PATH)}; do
+    for F in ${D}/lua*; do
+         # check if it's our preferred version
+        if ...; then
+            exec "${F}" "$0" "$@"
+        fi
+    done
+done
+printf "%s: unable to locate Lua interpreter\n" "${0##*/}" &gt;&amp;2
+exit 1
+]]
+-- begin pure Lua code
+print(_VERSION)
+</pre>
+
+<p>
+I recently published a script, <a href="http://www.25thandclement.com/%7Ewilliam/projects/runlua.html">runlua</a>, for portable execution of Lua scripts, which is why all of this stuff is still fresh in my mind.
+</p>
+
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631191/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+</div>
+
+<a name="CommAnchor631206"></a>
+<div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Jan 29, 2015 21:56 UTC (Thu) by <b>peter-b</b> (subscriber, #66996)
+       [<a href="https://lwn.net/Articles/631206/">Link</a>]
+    </p>
+    GNU Guile has a special "<a href="https://www.gnu.org/software/guile/manual/html_node/The-Meta-Switch.html">meta switch</a>"
+ which instructs the interpreter to interpret the first few lines of the
+ file -- up to a line containing only "!#" -- as arguments to the 
+interpreter rather than as source code.  It seems to work quite well:
+
+<pre>#!/usr/local/bin/guile \
+-e main -s
+!#
+(define (main args)
+        (map (lambda (arg) (display arg) (display " "))
+             (cdr args))
+        (newline))
+</pre>
+
+
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631206/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+
+<a name="CommAnchor631963"></a>
+<div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Feb 5, 2015 8:50 UTC (Thu) by <b>grawity</b> (subscriber, #80596)
+       [<a href="https://lwn.net/Articles/631963/">Link</a>]
+    </p>
+    <a href="http://www.in-ulm.de/%7Emascheck/various/shebang/">Sven Mascheck's website</a> has <em>loads</em> of information regarding OS differences in #! handling.
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631963/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+</div>
+
+<a name="CommAnchor631072"></a>
+<div class="CommentBox">
+  <p class="CommentTitle">How programs get run</p>
+  <div class="CommentBody">
+    <p class="CommentPoster">Posted Jan 29, 2015 14:43 UTC (Thu) by <b>jem</b> (subscriber, #24231)
+       [<a href="https://lwn.net/Articles/631072/">Link</a>]
+    </p>
+    This reminds me of the simplest way to make a Linux script that outputs some static text:
+
+<pre>#!/usr/bin/tail --lines=+2
+Text goes here.
+More text.
+Last line.
+</pre>
+
+  </div>
+  <p>
+  </p><div class="CommentReplyButton">
+    <form action="/Articles/631072/comment" method="post">
+      <input value="Reply to this comment" type="submit">
+    </form>
+  </div>
+  
+</div>
+</td> <!-- MC -->
+<td class="RightColumn">
+<div id="azk93271_right_zone"></div>
+</td>
+</tr></tbody></table></td>
+</tr></tbody></table><!-- endpage -->
+
+        <br clear="all">
+        <center>
+        <p>
+        <font size="-2">
+        Copyright © 2015, Eklektix, Inc.<br>
+        
+        Comments and public postings are copyrighted by their creators.<br>
+        Linux  is a registered trademark of Linus Torvalds<br>
+        </font>
+        </p></center>
+        
+        
+        </body></html>

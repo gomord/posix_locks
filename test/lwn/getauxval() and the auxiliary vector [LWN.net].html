@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html hasbrowserhandlers="true"><head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <meta name="viewport" content="width=device-width; user-scalable=0">
+
+  <link rel="stylesheet" href="getauxval%28%29%20and%20the%20auxiliary%20vector%20%5BLWN.net%5D_files/aboutReader.css" type="text/css">
+
+  <script type="text/javascript;version=1.8" src="getauxval%28%29%20and%20the%20auxiliary%20vector%20%5BLWN.net%5D_files/aboutReader.js"></script>
+<title>getauxval() and the auxiliary vector [LWN.net]</title><link href="https://lwn.net/favicon.ico" rel="shortcut icon"></head>
+
+<body class="light sans-serif loaded">
+  <div id="container" class="container font-size8">
+    <div style="display: block;" id="reader-header" class="header">
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderControls.css");
+      </style>
+      <a href="https://lwn.net/Articles/519085/" id="reader-domain" class="domain">lwn.net</a>
+      <div class="domain-border"></div>
+      <h1 id="reader-title">getauxval() and the auxiliary vector [LWN.net]</h1>
+      <div id="reader-credits" class="credits">By Michael KerriskOctober 10, 2012</div>
+    </div>
+
+    <div class="content">
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderContent.css");
+      </style>
+      <div style="display: block;" id="moz-reader-content"><div xml:base="https://lwn.net/Articles/519085/" id="readability-page-1" class="page"><div>
+
+<div class="ArticleText"><p> There are many mechanisms for communicating information between
+user-space applications and the kernel. System calls and pseudo-filesystems
+such as <tt>/proc</tt> and <tt>/sys</tt> are of course the most well known.
+Signals are similarly well known; the kernel employs signals to
+inform a process of various synchronous or asynchronous events—for
+example, when the process tries to write to a broken pipe or a child of the
+process terminates.
+ 
+</p><p> There are also a number of more obscure mechanisms for communication
+between the kernel and user space.  These include the Linux-specific <a href="https://lwn.net/Articles/131802/">netlink sockets</a> and <a href="http://www.ibm.com/developerworks/linux/library/l-user-space-apps/index.html">user-mode
+helper</a> features. Netlink sockets provide a socket-style API for
+exchanging information with the kernel. The user-mode helper feature allows
+the kernel to automatically invoke user-space executables; this mechanism
+is used in a number of places, including the implementation of control
+groups and <a href="http://man7.org/linux/man-pages/man5/core.5.html">piping core dumps
+to a user-space application</a>. 
+
+</p><p> The auxiliary vector, a mechanism for communicating information from
+the kernel to user space, has remained largely invisible until
+now. However, with the addition of a new library function,
+<tt>getauxval()</tt>, in the GNU C library (glibc) 2.16 release that
+appeared at the end of June, it has now become more visible.
+
+</p><blockquote>
+<img alt="[Location of auxiliary
+vector in process address space]" src="getauxval%28%29%20and%20the%20auxiliary%20vector%20%5BLWN.net%5D_files/auxvec.png" hspace="10" vspace="5" width="180" align="right">
+</blockquote><p> Historically, many UNIX systems have implemented the auxiliary vector
+feature.  In essence, it is a list of key-value pairs that the kernel's ELF
+binary loader (<tt>fs/binfmt_elf.c</tt> in the kernel source) constructs
+when a new executable image is loaded into a process. This list is placed
+at a specific location in the process's address space; on Linux systems it
+sits at the high end of the user address space, just above the (downwardly
+growing) stack, the command-line arguments (<i>argv</i>), and environment
+variables (<i>environ</i>).
+
+</p><p> From the description and diagram, we can see that although the
+auxiliary vector is somewhat hidden, it is accessible with a little
+effort. Even without using the new library function, an application that
+wants to access the auxiliary vector merely needs to obtain the address of
+the location that follows the <tt>NULL</tt> pointer at the end of the
+environment list.  Furthermore, at the shell level, we can discover the
+auxiliary vector that was supplied to an executable by setting the
+<tt>LD_SHOW_AUXV</tt> environment variable when launching an application:
+
+</p><pre>    $ <b>LD_SHOW_AUXV=1 sleep 1000</b>
+    AT_SYSINFO_EHDR: 0x7fff35d0d000
+    AT_HWCAP:        bfebfbff
+    AT_PAGESZ:       4096
+    AT_CLKTCK:       100
+    AT_PHDR:         0x400040
+    AT_PHENT:        56
+    AT_PHNUM:        9
+    AT_BASE:         0x0
+    AT_FLAGS:        0x0
+    AT_ENTRY:        0x40164c
+    AT_UID:          1000
+    AT_EUID:         1000
+    AT_GID:          1000
+    AT_EGID:         1000
+    AT_SECURE:       0
+    AT_RANDOM:       0x7fff35c2a209
+    AT_EXECFN:       /usr/bin/sleep
+    AT_PLATFORM:     x86_64
+</pre><p> The auxiliary vector of each process on the system is also visible via
+a corresponding <tt>/proc/PID/auxv</tt> file. Dumping the contents of the
+file that corresponds to the above command (as eight-byte decimal numbers,
+because the keys and values are of that size on the 64-bit system used for
+this example), we can see the key-value pairs in the vector, followed by a
+pair of zero values that indicate the end of the vector:
+
+</p><pre>    $ <b>od -t d8 /proc/15558/auxv</b>
+    0000000                   33      140734096265216
+    0000020                   16           3219913727
+    0000040                    6                 4096
+    0000060                   17                  100
+    0000100                    3              4194368
+    0000120                    4                   56
+    0000140                    5                    9
+    0000160                    7                    0
+    0000200                    8                    0
+    0000220                    9              4200012
+    0000240                   11                 1000
+    0000260                   12                 1000
+    0000300                   13                 1000
+    0000320                   14                 1000
+    0000340                   23                    0
+    0000360                   25      140734095335945
+    0000400                   31      140734095347689
+    0000420                   15      140734095335961
+    0000440                    0                    0
+    0000460
+</pre><p> Scanning the high end of user-space memory or <tt>/proc/PID/auxv</tt>
+is a clumsy way of retrieving values from the auxiliary vector. The new
+library function provides a simpler mechanism for retrieving individual
+values from the list:
+
+</p><pre>    #include &lt;sys/auxv.h&gt;
+
+    unsigned long int getauxval(unsigned long int type);
+</pre><p> The function takes a key as its single argument, and returns the
+corresponding value.  The glibc header files define a set of symbolic
+constants with names of the form <tt>AT_*</tt> for the key value passed to
+<tt>getauxval()</tt>; these names are exactly the same as the strings
+displayed when executing a command with <tt>LD_SHOW_AUXV=1</tt>.
+
+</p><p> Of course, the obvious question by now is: what sort of information is
+placed in the auxiliary vector, and who needs that information?  The
+primary customer of the auxiliary vector is the dynamic linker
+(<tt>ld-linux.so</tt>).  In the usual scheme of things, the kernel's ELF
+binary loader constructs a process image by loading an executable into the
+process's memory, and likewise loading the dynamic linker into memory. At
+this point, the dynamic linker is ready to take over the task of loading
+any shared libraries that the program may need in preparation for handing
+control to the program itself.  However, it lacks some pieces of
+information that are essential for these tasks: the location of the program
+inside the virtual address space, and the starting address at which
+execution of the program should commence.
+
+</p><p> In theory, the kernel could provide a system call that the 
+dynamic
+linker could use in order to obtain the required information. However, 
+this
+would be an inefficient way of doing things: the kernel's program loader
+ already has the information (because it has scanned the 
+ELF binary and built the process image) and
+knows that the dynamic linker will need it.  Rather than maintaining a
+record of this information until the dynamic linker requests it, the 
+kernel
+can simply make it available in the process image at some location known
+ to
+the dynamic linker. That location is, of course, the auxiliary vector.
+
+</p><p> It turns out that there's a range of other information that the
+kernel's program loader already has and which it knows the dynamic linker
+will need.  By placing all of this information in the auxiliary vector, the
+kernel either saves the programming overhead of making this information
+available in some other way (e.g., by implementing a dedicated system
+call), or saves the dynamic linker the cost of making a system call, or
+both. Among the values placed in the auxiliary vector and available via
+<tt>getauxval()</tt> are the following:
+
+</p><ul>
+
+<li> <tt>AT_PHDR</tt> and <tt>AT_ENTRY</tt>: The values for these keys
+are the address of the ELF program headers of the executable and the entry
+address of the executable. The dynamic linker uses this information to
+perform linking and pass control to the executable.
+
+
+</li><li> <tt>AT_SECURE</tt>: The kernel assigns a nonzero value to this key
+if this executable should be treated <i>securely</i>. This setting may be
+triggered by a Linux Security Module, but the common reason is that the
+kernel recognizes that the process is executing a set-user-ID or
+set-group-ID program.  In this case, the dynamic linker disables the use of
+certain environment variables (as described in the <a href="http://man7.org/linux/man-pages/man8/ld-linux.so.8.html"><tt>ld-linux.so(8)</tt>
+manual page</a>) and the C library changes other aspects of its behavior.
+
+</li><li> <tt>AT_UID</tt>, <tt>AT_EUID</tt>, <tt>AT_GID</tt>, and
+<tt>AT_EGID</tt>: These are the real and effective user and group IDs of
+the process.  Making these values available in the vector saves the dynamic
+linker the cost of making system calls to determine the values. If the
+<tt>AT_SECURE</tt> value is not available, the dynamic linker uses these
+values to make a decision about whether to handle the executable securely.
+
+
+
+</li><li> <tt>AT_PAGESZ</tt>: The value is the system page size.  The
+dynamic linker needs this information during the linking phase, and the C
+library uses it in the implementation of the <tt>malloc</tt> family of
+functions.
+
+
+</li><li> <tt>AT_PLATFORM</tt>: The value is a pointer to a string
+identifying the hardware platform on which the program is running. In some
+circumstances, the dynamic linker uses this value in the interpretation of
+<tt>rpath</tt> values. (The <tt>ld-linux.so(8)</tt> man page describes
+<tt>rpath</tt> values.)
+
+
+</li><li> <tt>AT_SYSINFO_EHDR</tt>: The value is a pointer to the page
+containing the Virtual Dynamic Shared Object (VDSO) that the kernel creates
+in order to provide fast implementations of certain system calls. (Some
+documentation on the VDSO can be found in the kernel source file
+<tt>Documentation/ABI/stable/vdso</tt>.)
+
+
+</li><li> <tt>AT_HWCAP</tt>: The value is a pointer to a multibyte mask of
+bits whose settings indicate detailed processor capabilities.  This
+information can be used to provide optimized behavior for certain library
+functions. The contents of the bit mask are hardware dependent (for
+example, see the kernel source file
+<tt>arch/x86/include/asm/cpufeature.h</tt> for details relating to the
+Intel x86 architecture).
+
+
+</li><li> <tt>AT_RANDOM</tt>: The value is a pointer to sixteen random bytes
+provided by the kernel. The dynamic linker uses this to implement a <a href="http://en.wikipedia.org/wiki/Stack_buffer_overflow#Stack_canaries">stack
+canary</a>.
+
+</li></ul><p> The precise reasons why the GNU C library developers have chosen to add
+the <tt>getauxval()</tt> function now are a little unclear. The commit
+message and NEWS file entry for the change were merely brief explanations
+of what the change was, rather than why it was made. The only <a href="https://lwn.net/Articles/519195/">clue</a> provided by the implementer on the
+libc-alpha mailing list suggested that doing so was useful to allow for
+"<span>future enhancements to the AT_ values, especially target-specific
+ones</span>."  That comment, plus the observation that the glibc developers
+tend to be rather conservative about adding new interfaces to the ABI,
+suggest that that they have some interesting new user-space uses of the
+auxiliary vector in mind.</p><hr width="60%" align="left"><p style="display: inline;" class="readability-styled">
+           (</p><a href="https://lwn.net/login?target=/Articles/519085/">Log in</a><p style="display: inline;" class="readability-styled"> to post comments)
+           </p></div> 
+
+
+
+<a name="CommAnchor519493"></a>
+
+
+<a name="CommAnchor519868"></a>
+
+
+ 
+
+
+
+</div></div></div>
+    </div>
+
+    <div>
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderControls.css");
+      </style>
+      <div style="display: none;" id="reader-message"></div>
+    </div>
+
+    <div style="display: none;" id="reader-footer" class="footer">
+      <style scoped="">
+        @import url("chrome://global/skin/aboutReaderControls.css");
+      </style>
+      <button id="remove-button" class="button remove-button">
+    </button></div>
+  </div>
+
+  <ul visible="true" style="display: block;" id="reader-toolbar" class="toolbar">
+    <style scoped="">
+      @import url("chrome://global/skin/aboutReaderControls.css");
+    </style>
+    <li><button title="Close Reader View" id="close-button" class="button close-button"></button></li>
+    <li><button title="Share" id="share-button" class="button share-button"></button></li>
+    <ul id="style-dropdown" class="dropdown">
+      <li><button title="Type controls" class="dropdown-toggle button style-button"></button></li>
+      <li id="reader-popup" class="dropdown-popup">
+        <div id="font-type-buttons"><button class="sans-serif-button selected"><div class="name">Aa</div><div class="description">Sans-serif</div></button><button class="serif-button"><div class="name">Aa</div><div class="description">Serif</div></button></div>
+        <hr>
+        <div id="font-size-buttons">
+          <button id="font-size-minus" class="minus-button">
+          </button><button id="font-size-sample">Aa</button><button id="font-size-plus" class="plus-button">
+        </button></div>
+        <hr>
+        <div id="color-scheme-buttons"><button class="light-button selected"><div class="name">Light</div></button><button class="dark-button"><div class="name">Dark</div></button><button class="sepia-button"><div class="name">Sepia</div></button></div>
+        <div class="dropdown-arrow">
+      </div></li>
+    </ul>
+    <li><button title="Add to Reading List" id="toggle-button" class="button toggle-button" hidden="true"></button></li>
+    <li><button title="Open Reading List" id="list-button" class="button list-button" hidden="true"></button></li>
+    <li><button id="pocket-button" class="button"></button></li>
+  </ul>
+
+
+
+
+</body></html>
