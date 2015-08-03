@@ -1,0 +1,384 @@
+/* Copyright 2011 Patrick Horgan patrick at dbp-consulting dot com
+   all rights reserved.
+ */
+html { font-size: 100%; } /* fight ie 6 and 7 font-size bug */
+a:link {
+    color: rgb(65,152,100);
+    text-decoration: none;
+}
+a:hover {
+    text-decoration: underline;
+}
+input, textarea{
+    width: 200px;
+    margin-bottom: 5px;
+    margin-left: 5px;
+}
+img {
+    margin: 5px;
+}
+fieldset {
+    border: 1px solid #781351;
+    width: 25em;
+    background-color: rgb(255,255,192);
+    padding: 1em;
+    margin: 0 auto;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 1.5px .7px 1px 1.5px rgba(80,100,80,1);
+    -moz-box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1);
+    box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1);
+}
+legend {
+    color: rgb(255,255,192);
+    background-color: rgb(63,63,47);
+    font-weight: bold;
+    /*
+    border: 1px solid rgb(255,255,192);
+    */
+    padding: 2px 6px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 1.5px .7px 1px 1.5px rgba(80,100,80,1);
+    -moz-box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1);
+    box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1);
+} 
+/*
+    font-family: "LMRomanDunh10", Cambria,'Times New Roman','Nimbus Roman No9 L','Freeserif',Times,serif;
+    font-family: Monaco,"Lucida Console","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono",monospace;
+*/
+h1,h2,h3,h4,h5,h6{
+    font-family:  Bitter,Cambria,Georgia,serif;
+}
+h1 { margin-left: -2.5em; font-size: 130%; }
+h2 { margin-left: -2.0em; font-size: 120%; }
+h3 { margin-left: -1.5em; font-size: 110%; }
+h4 { margin-left: -1.0em; font-size: 100%; }
+h5,h6 { margin-left: -0.5em; font-size: 90%; }
+p,li {
+    font-family: "Century Gothic","Apple Gothic",sans-serif;
+    font-style: normal;
+}
+p {
+    line-height: 150%;
+    width: auto;
+    min-width: 20%;
+}
+li {
+    line-height: 180%;
+}
+fieldset label{
+    float: left;
+    width: 10em;
+    font-weight: bold;
+    font-size: 80%;
+    text-align: right;
+}
+.strikeout { text-decoration: line-through; }
+.yellow-highlight { background-color: rgb(255,255,190);}
+.center { text-align: center; }
+.right { text-align: right; }
+.floatright { float: right; margin-left: 1em; }
+.floatleft { float: left; margin-right: 1em; }
+.clear { clear: both; }
+.clearleft { clear: left; }
+.clearright { clear: right; }
+.teeny, .small, .sub, .sup { font-size: 60%; }
+.sub { vertical-align: sub; }
+.sup { vertical-align: super; }
+.formula p { 
+    line-height: 90%;
+    font-size: 100%;
+}
+.formula{
+    margin: 10px;
+    background-color: rgb(255,255,192);
+    padding: 5px;
+    border-style: solid;
+    border-width: 1px;
+}
+div#body { width: 90%; }
+body {
+    padding: 0;
+    margin: 0;
+    margin-top: 3em;
+    margin-left: 10em;
+    margin-right: 10%;
+    background-image: url('../images/GoldenTile.png');
+    background-color: rgb(255,255,255);
+    background-repeat: repeat;
+}
+
+#boosticonbody {
+    background-color: #cad2f0;
+    background-image: none;
+}
+
+span.inline-code {
+    font-size: 90%;
+    font-family: Monaco,"Lucida Console","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono",monospace;
+    white-space: pre;
+    font-weight: bold;
+}
+
+div.sm_codebox,div.codebox,div.tiny_codebox,div.wide_codebox,div.med_codebox,div.wide_wide_codebox,div.flex_codebox{
+    font-family: Monaco,"Lucida Console","DejaVu Sans Mono","Bitstream Vera Sans Mono","Liberation Mono",monospace;
+    white-space: pre;
+    line-height: 1.4em;
+    margin: .5em ;
+    padding: .5em;
+    font-size: 90%;
+    color: rgb(0,0,0);
+    overflow: auto;
+    background-color: rgb(253,253,223);
+    background-image: url("../images/dbpbinary.png");
+    background-image: url("../images/EngGraph.png");
+    background-repeat: repeat;
+    border-color: rgb(50,155,30);
+    border-width: 1px;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 1.5px .7px 1px 1.5px rgba(80,100,80,1.0);
+    -moz-box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1.0);
+    box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1.0);
+}
+
+div.flex_codebox { display: inline-block; padding-right: 1em;}
+
+div.tiny_codebox { width:25em; }
+div.sm_codebox { width:35em; }
+div.med_codebox { width: 44em; }
+div.codebox { width: 52em; }
+div.wide_codebox { width:62em; }
+div.wide_wide_codebox { width:80em; }
+div.sidebar {
+    background-color: rgba(250,255,220,.8);
+    padding: .5em;
+    font-size: 85%;
+    width: 30%;
+    border-width: 5px;
+    border-style: double;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 1.5px .7px 1px 1.5px rgba(80,100,80,1.0);
+    -moz-box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1.0);
+    box-shadow: 1.5px .7px 1px 1.5px rgba(80,100,80,1.0);
+
+}
+div.sidebar h1,div.sidebar h2,div.sidebar h3,div.sidebar h4,div.sidebar h5,div.sidebar h6{
+    margin-left: 0em;
+}
+div.sidebar p{
+    min-width: 0em;
+}
+
+
+div.sidebysidel {
+    margin-right: 0px;
+    width: 47%;
+    float: left;
+}
+div.sidebysider {
+    margin-left: 0px;
+    width: 47%;
+    float: right;
+}
+/* min-width is unexpanded size, and max-width is expanded width.  
+ * If you change the font-family to one with a different aspect ration,
+ * you might have to play with these as well.
+ */
+#toc {
+    margin: .5em;
+    margin-left: -2.5em;
+    text-align: left;
+    display: inline-block;
+    padding-left: .5em;
+    padding-right: 1em;
+    padding-bottom: .3em;
+    background-color: rgba(247,247,209,.4);
+    font-family: "Century Gothic","Apple Gothic",sans-serif;
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 1.5px .7px 1px 1.5px rgba(100,100,100,1.0);
+    -moz-box-shadow: 1.5px .7px 1px 1.5px rgba(100,100,100,1.0);
+    box-shadow: 1.5px .7px 1px 1.5px rgba(100,100,100,1.0);
+}
+span#toc_toggle_target{
+    font-size: 55%;
+    cursor: pointer;
+    color: rgb( 0,60,0);
+}
+#toc a{
+    display: block;
+    text-align: left;
+    text-decoration: none;
+    color: rgb(0,54,0);
+}
+#toc a:hover {
+    color: rgb(0,0,255);
+    text-decoration: underline;
+}
+#toc a:hover:visited {
+    color: rgb(255,130,205);
+}
+/*
+a.toc_classH1, a.toc_classH2, a.toc_classH3,
+a.toc_classH4, a.toc_classH5, a.toc_classH6{
+    display: block;
+}
+    */
+a.toc_classH1{ margin-left: 0em; }
+a.toc_classH2{ margin-left: 1em; }
+a.toc_classH3{ margin-left: 2em; }
+a.toc_classH4{ margin-left: 3em; }
+a.toc_classH5{ margin-left: 4em; }
+a.toc_classH6{ margin-left: 5.0em; }
+
+#navbar {
+    position: absolute;
+    top: 7px;
+    display: block;
+    margin: 0;
+    margin-left: -10em; /* body margin-left is 10em, this pulls to edge */
+    margin-bottom: 1em;
+    padding: 0;
+    padding-left: 10em;	/* Puts text back to margin but leaves background */
+    float: left;	/* So floated children work right */
+    width: 80em;	/* Always leaves room for text so no wrap */
+    min-width: 100%;
+    border : .5px;
+    border-color: rgb(10,10,180);
+    border-style: solid;
+    border-right: none;
+    border-left: none;
+    background-color: rgb(223,223,190);
+    border-top: rgb(190,190,150) 2px solid;
+}
+#navbar li:first-child {
+    border-left: 1px solid;
+}
+ul {margin-left: 1em; padding-left: 1em;}
+ul li {
+    list-style-type: circle;
+}
+#navbar li{
+    margin: 0;
+    float: left;
+    list-style-type: none;
+    display: inline;
+    padding-right: 1.5em;
+    padding-left: 1.5em;
+    border-right: 1px solid;
+}
+#navbar a:link, #navbar a:visited {
+    color: rgb(0,60,0);
+    padding: 0;
+    float: left;
+    text-decoration: none; /* No underline */
+    font-family: Georgia,'Times New Roman','Nimbus Roman No9 L','Freeserif',Times,serif;
+    font-family:  Bitter,Cambria,Georgia,serif;
+    font-weight: 500;
+    font-size: 1.1em;
+    text-transform: uppercase;
+}
+/* This section highlights the current link
+ * For each page that corresponds to one of the navigation bar links, we
+ * give an id to it's body element.  Each of the li elements in the navigation
+ * bar also has an id.  When, for example, #stuff is inside #stuff-home, we
+ * know that we're on that page and highlight that link.  We give the same
+ * style to navbar links when we're hovering over them or clicking on them
+ */
+#home-home #home a, #debugging-home #debugging a,
+#photography-home #photography a, #tutorial-home #tutorials a,
+#stuff-home #stuff a, #navbar a:hover, #navbar a:focus {
+    color: rgb(162,132,25);
+}
+/* This section restyles the background behind the a to be lighter and with
+ * broad side borders in white for right and black for left
+ */
+#home-home #home, #debugging-home #debugging,
+#photography-home #photography, #tutorial-home #tutorials,
+#stuff-home #stuff  {
+    border-left: white 2px solid;
+    border-right: burlywood 1px solid;
+    background-color: rgba(243,243,210,0.7);
+    box-shadow: 1.5px 0px 2px  rgba(80,100,80,1);
+}
+/* Logo is absolute position in body and has its width vary with font size */
+#logo {
+    position: absolute;
+    top: 0;
+    left: 0%;
+    margin-top: 1em;
+    margin-left: 1em;
+    width: 6em;
+    border: solid;
+    border-width: 1px;
+}
+
+#comments {
+    margin: 1em;
+}
+
+#usercomment {
+    width: 50%;
+    height: 16em;
+    margin: 1em;
+}
+
+#username {
+    margin: 1em;
+}
+#commentstatus {
+    margin: 1em;
+    margin: 0 auto;
+    margin-bottom: 1em;
+    width: 50%;
+    height: 1.5em;
+    color: rgb(255,0,0);
+}
+
+#thecomments {
+    text-align: left;
+    width: 50%;
+    float: both;
+    margin: 0 auto;
+}
+
+.acomment{
+    -webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 1.5px .7px 1px 1.5px rgba(120,130,120,1);
+    -moz-box-shadow: 1.5px .7px 1px 1.5px rgba(120,130,120,1);
+    box-shadow: 1.5px .7px 1px 1.5px rgba(120,130,120,1);
+}
+
+.commenter{
+    font-weight: bold;
+    padding: .25em;
+    float: left;
+}
+
+.comment_date{
+    float: right;
+    font-size: 70%;
+    padding: .25em;
+    padding-left: 2em;
+    margin-top: .5em;
+    margin-left: 2em;
+
+
+}
+
+.comment_comment{
+    clear: both;
+    padding: .5em;
+    padding-left: 2em;
+}
+

@@ -4,8 +4,8 @@
 #include <string.h>
 
 // Set either of these to 1 to prevent CPU reordering
-#define USE_LOCAL_REORDER	   0
-#define DIRTY_CACH		   0	
+#define USE_LOCAL_REORDER	   1
+#define DIRTY_CACH		   1
 #define USE_CPU_FENCE              0
 #define USE_SINGLE_HW_THREAD       1  // Supported on Linux, but not Cygwin or PS3
 
@@ -76,18 +76,18 @@ sem_t beginSema1lo;
 sem_t beginSema2lo;
 sem_t endSema;
 volatile int randoms[0x200000];
-#define X 0
-#define Y 64
 
 inline void clear_random(void){
 	int i ;
-	int step = 64;
-	for(i=0;i < sizeof(randoms)/sizeof(int);i+=step)
-		randoms[i] = 0;
+	//int step = 64;
+	for(i=0;i < sizeof(randoms)/sizeof(int);i+=128)
+		randoms[i] = 1;
 
 }
+#define X 0
+#define Y 1
 int xy[128];
-int r1, r2;
+volatile int r1, r2;
 
 void *thread1Func(void *param)
 {

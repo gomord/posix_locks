@@ -1,0 +1,39 @@
+/* Copyright 2011 Patrick Horgan patrick at dbp-consulting dot com
+   all rights reserved.
+ */
+
+table{
+    margin-top: 1.5em;
+    margin-left: auto;
+    margin-right: auto;
+    font-size: 80%;
+    background: rgb(250,250,255);
+    border: 1px solid black;
+    padding: 1em;
+}
+table tr td,th {
+    padding: .5em;
+    border: 1px solid black;
+    font-family: 'Courier';
+}
+
+table th{
+    background: rgb(235,235,240);
+    border: none;
+}
+
+table tr:nth-child(odd){
+    background: rgb(240,240,240);
+}
+
+caption {
+    caption-side: bottom;
+    margin-bottom: 1.5em;
+    padding: .7em;
+    font-weight: bold;
+}
+
+table
+{
+    border-collapse:collapse;
+}

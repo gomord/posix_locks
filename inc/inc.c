@@ -8,13 +8,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#define NTHREADS 4
+#define NTHREADS 2
 #define NLOOP 0xfffffff
-#define ASM_INC 0
-#define PER_CPU 0
-#define PER_CACH 64
+#define ASM_INC 1
 #define MUL_PROC 1
-#define LOCK ""//"lock "
+#define LOCK "lock "
+#define PER_CPU 1
+#define PER_BLALBA 64
 unsigned int g_inc=0;
 unsigned int *g_incs;
 pthread_t threads[NTHREADS];
@@ -36,10 +36,10 @@ void *do_inc(void *id) {
 	//printf("thread %d started\n",(int)id);
 	for(i=0;i<NLOOP;i++){
 		//asm("lock incl %0"::"m"(g_inc));
-#if ASM_INC
+#if PER_CPU
+		g_incs[(int)id*PER_BLALBA]++;
+#elif ASM_INC
 		asm(LOCK "incl %0"::"m"(g_inc));
-#elif PER_CPU
-		g_incs[(int)id*PER_CACH]++;
 #else
 		g_inc++;
 #endif
@@ -56,7 +56,6 @@ int main(int argc, char *argv[]) {
 	}
 	//pthread_t tid;	
 	pthread_attr_t attr;
-	printf("cpus %d\n",get_num_cpus());
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
@@ -83,7 +82,7 @@ int main(int argc, char *argv[]) {
 	pthread_attr_destroy(&attr);
 	//pthread_attr_destroy(&attr);
 	for(i=0;i<NTHREADS;i++){
-		sum+=g_incs[i*PER_CACH];
+		sum+=g_incs[i*PER_BLALBA];
 	}
 	printf("inc = %u, from %u, %% %f \n",
 #if PER_CPU
