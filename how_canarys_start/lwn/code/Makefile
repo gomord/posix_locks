@@ -1,8 +1,6 @@
 CC=gcc
 CFLAGS=-I.
-OBJ = show_info.out do_execve.out 
-
-$(OBJ):%.c 
-	$(CC) -o $@ $< $(CFLAGS)
-
-	
+OBJ:=show_info.out do_execve.out
+all:$(OBJ)
+%.out:%.c
+	$(CC) -o $@ $< $(CFLAGS) -g
