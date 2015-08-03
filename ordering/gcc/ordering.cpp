@@ -4,9 +4,9 @@
 #include <string.h>
 
 // Set either of these to 1 to prevent CPU reordering
-#define USE_LOCAL_REORDER	   1
+#define USE_LOCAL_REORDER	   0
 #define DIRTY_CACH		   0	
-#define USE_CPU_FENCE              1
+#define USE_CPU_FENCE              0
 #define USE_SINGLE_HW_THREAD       1  // Supported on Linux, but not Cygwin or PS3
 
 #if USE_SINGLE_HW_THREAD
@@ -80,7 +80,11 @@ volatile int randoms[0x200000];
 #define Y 64
 
 inline void clear_random(void){
-	memset((void *)randoms,0,sizeof(randoms));
+	int i ;
+	int step = 64;
+	for(i=0;i < sizeof(randoms)/sizeof(int);i+=step)
+		randoms[i] = 0;
+
 }
 int xy[128];
 int r1, r2;
@@ -95,8 +99,9 @@ void *thread1Func(void *param)
 #endif
 #if USE_LOCAL_REORDER
 
-		sem_wait(&beginSema1lo);  // Wait for signal
 		xy[Y] = 0;
+		sem_post(&beginSema2lo);
+		sem_wait(&beginSema1lo);  // Wait for signal
 #endif
 		sem_wait(&beginSema1);  // Wait for signal
 		while (random.integer() % 8 != 0) {}  // Random delay
@@ -129,8 +134,9 @@ void *thread2Func(void *param)
 		clear_random();
 #endif
 #if USE_LOCAL_REORDER
-		sem_wait(&beginSema2lo);  // Wait for signal
 		xy[X] = 0;
+		sem_post(&beginSema1lo);
+		sem_wait(&beginSema2lo);  // Wait for signal
 #endif
 		sem_wait(&beginSema2);  // Wait for signal
 		while (random.integer() % 8 != 0) {}  // Random delay
@@ -157,6 +163,8 @@ int main()
 	// Initialize the semaphores
 	sem_init(&beginSema1, 0, 0);
 	sem_init(&beginSema2, 0, 0);
+	sem_init(&beginSema1lo, 0, 0);
+	sem_init(&beginSema2lo, 0, 0);
 	sem_init(&endSema, 0, 0);
 
 	// Spawn the threads
@@ -171,7 +179,7 @@ int main()
 	CPU_SET(0, &cpus);
 	pthread_setaffinity_np(thread1, sizeof(cpu_set_t), &cpus);
 	CPU_ZERO(&cpus);
-	CPU_SET(0, &cpus);
+	CPU_SET(1, &cpus);
 	pthread_setaffinity_np(thread2, sizeof(cpu_set_t), &cpus);
 #endif
 
@@ -183,12 +191,9 @@ int main()
 #if !USE_LOCAL_REORDER
 		xy[X] = 0;
 		xy[Y] = 0;
-#else
+#endif
 		// Signal both threads
 
-		sem_post(&beginSema1lo);
-		sem_post(&beginSema2lo);
-#endif
 		sem_post(&beginSema1);
 		sem_post(&beginSema2);
 		// Wait for both threads
@@ -198,7 +203,8 @@ int main()
 		if (r1 == 0 && r2 == 0)
 		{
 			detected++;
-			printf("%d reorders detected after %d iterations %f avg\n", detected, iterations,(float)iterations/detected );
+			printf("%d reorders detected after %d iterations %f avg\n", 
+				detected, iterations,(float)iterations/detected );
 		}
 	}
 	return 0;  // Never returns
