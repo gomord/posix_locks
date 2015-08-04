@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<!--[if IE 8]><html lang="en" dir="ltr" class="ie8"><![endif]-->
+<!--[if IE 9]><html lang="en" dir="ltr" class="ie9"><![endif]-->
+<!--[if gt IE 9]><!-->
+<html class="js no-touch localstorage sessionstorage contenteditable use-opacity-transitions" dir="ltr" lang="en"><!--<![endif]--><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+    <title>Disqus Comments</title>
+
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    
+    <style>
+        html {
+            overflow: hidden;
+        }
+        
+    </style>
+
+<link media="all" href="a_data/lounge.css" rel="stylesheet"><script src="a_data/config.js" data-requiremodule="remote/config" data-requirecontext="_" async="" charset="utf-8" type="text/javascript"></script><script src="a_data/common.js" data-requiremodule="common.bundle" data-requirecontext="_" async="" charset="utf-8" type="text/javascript"></script><script src="a_data/lounge_002.js" data-requiremodule="lounge.bundle" data-requirecontext="_" async="" charset="utf-8" type="text/javascript"></script><script src="a_data/ga.js" data-requiremodule="ga" data-requirecontext="_" async="" charset="utf-8" type="text/javascript"></script><style id="css_1438677928531"></style><!-- base href="http://disqus.com/embed/comments/?base=default&version=f009d0b8aa7f9f42f832c530d80447f3&f=elibenderskyswebsite&t_i=position-independent-code-pic-in-shared-libraries&t_u=http%3A%2F%2Feli.thegreenplace.net%2F2011%2F11%2F03%2Fposition-independent-code-pic-in-shared-libraries&t_d=%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Position%20Independent%20Code%20(PIC)%20in%20shared%20libraries%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20&t_t=%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20Position%20Independent%20Code%20(PIC)%20in%20shared%20libraries%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20&s_o=default&l=en" --><script charset="UTF-8" async="" src="a_data/event.js"></script><link media="all" href="a_data/discovery.css" rel="stylesheet"><script src="a_data/discovery.js" data-requiremodule="discovery/main" data-requirecontext="_" async="" charset="utf-8" type="text/javascript"></script></head>
+<body>
+    
+    <!--[if lte IE 8]>
+<script src="//a.disquscdn.com/1438375549/build/vendor/ie8.js"></script>
+<![endif]-->
+<!--[if IE 9]>
+<script src="//a.disquscdn.com/1438375549/build/vendor/ie9.js"></script>
+<![endif]-->
+
+    
+<script type="text/json" id="disqus-urls">{
+    "root":"//disqus.com",
+    "next":"//a.disquscdn.com/next/current/embed"
+}</script>
+
+    
+
+    <div id="error" style="display:none; text-align: center">
+        <p>We were unable to load Disqus. If you are a moderator please see our <a href="https://docs.disqus.com/help/83/"> troubleshooting guide</a>. </p>
+    </div>
+
+    
+    <script type="text/json" id="disqus-forumData">{"session":{"canModerate":false,"audienceSyncVerified":false,"canReply":true,"mustVerifyEmail":false},"features":{},"forum":{"category":"Tech","description":null,"founder":"3961973","settings":{"supportLevel":0,"adsDRNativeEnabled":false,"disable3rdPartyTrackers":false,"moderatorText":"","ssoRequired":false,"linkAffiliationEnabled":false,"hasCustomAvatar":false,"organicDiscoveryEnabled":false,"colorScheme":"light","discoveryMax":false,"discoverySettingsUrl":"https://elibenderskyswebsite.disqus.com/admin/settings/ads/","adsVideoEnabled":false,"allowAnonPost":false,"allowMedia":false,"promotedDiscoveryEnabled":false,"allowAnonVotes":false,"mustVerifyEmail":true,"discoveryVariant":null,"adsBannerEnabled":false,"audienceSyncEnabled":false,"typeface":"auto","discoveryLocked":false,"discoveryThumbnailsEnabled":false,"isVIP":false},"url":"http://eli.thegreenplace.net","guidelines":null,"favicon":{"permalink":"http://disqus.com/api/forums/favicons/elibenderskyswebsite.jpg","cache":"//a.disquscdn.com/uploads/forums/320/7898/favicon.png"},"language":"en","avatar":{"small":{"permalink":"http://disqus.com/api/forums/avatars/elibenderskyswebsite.jpg?size=32","cache":"//a.disquscdn.com/1438375549/images/noavatar32.png"},"large":{"permalink":"http://disqus.com/api/forums/avatars/elibenderskyswebsite.jpg?size=92","cache":"//a.disquscdn.com/1438375549/images/noavatar92.png"}},"pk":"3207898","signedUrl":"http://disq.us/?url=http%3A%2F%2Feli.thegreenplace.net&key=VqxvCG8y_q8kLTQI6P8yBQ","raw_guidelines":null,"id":"elibenderskyswebsite","channel":null,"name":"Eli Bendersky's website"}}</script>
+
+    
+    <script type="text/json" id="disqus-threadData">{"cursor":{"hasPrev":false,"prev":null,"total":3,"hasNext":false,"next":"1:0:0"},"code":0,"response":{"lastModified":1418449721,"posts":[{"forum":"elibenderskyswebsite","parent":null,"isApproved":true,"author":{"username":"disqus_pItUjCuJmX","about":"","name":"\uc774\ub450\uc6c5","disable3rdPartyTrackers":false,"url":"https://github.com/fritzprix","isAnonymous":false,"rep":1.2324929999999998,"profileUrl":"https://disqus.com/by/disqus_pItUjCuJmX/","reputation":1.2324929999999998,"location":"","isPrivate":false,"isPrimary":true,"joinedAt":"2014-10-10T06:44:52","id":"125132459","avatar":{"small":{"permalink":"http://disqus.com/api/users/avatars/disqus_pItUjCuJmX.jpg","cache":"//a.disquscdn.com/uploads/users/12513/2459/avatar32.jpg?1412923494"},"isCustom":true,"permalink":"http://disqus.com/api/users/avatars/disqus_pItUjCuJmX.jpg","cache":"//a.disquscdn.com/uploads/users/12513/2459/avatar92.jpg?1412923494","large":{"permalink":"http://disqus.com/api/users/avatars/disqus_pItUjCuJmX.jpg","cache":"//a.disquscdn.com/uploads/users/12513/2459/avatar92.jpg?1412923494"}}},"media":[],"isDeleted":false,"isFlagged":false,"dislikes":0,"raw_message":"Nice article!! I've been looking for way to load module on my own real-time os","createdAt":"2014-10-10T06:46:06","id":"1628411836","thread":"3005225592","depth":0,"numReports":0,"isDeletedByAuthor":false,"likes":0,"isEdited":false,"message":"\u003cp>Nice article!! I've been looking for way to load module on my own real-time os\u003c/p>","isSpam":false,"isHighlighted":false,"points":0},{"forum":"elibenderskyswebsite","parent":null,"isApproved":true,"author":{"username":"dilanmanatunga","about":"","name":"Dilan Manatunga","disable3rdPartyTrackers":false,"url":"","isAnonymous":false,"rep":1.246071,"profileUrl":"https://disqus.com/by/dilanmanatunga/","reputation":1.246071,"location":"","isPrivate":false,"isPrimary":true,"joinedAt":"2013-07-30T16:47:43","id":"64956233","avatar":{"small":{"permalink":"http://disqus.com/api/users/avatars/dilanmanatunga.jpg","cache":"//a.disquscdn.com/1438375549/images/noavatar32.png"},"isCustom":false,"permalink":"http://disqus.com/api/users/avatars/dilanmanatunga.jpg","cache":"//a.disquscdn.com/1438375549/images/noavatar92.png","large":{"permalink":"http://disqus.com/api/users/avatars/dilanmanatunga.jpg","cache":"//a.disquscdn.com/1438375549/images/noavatar92.png"}}},"media":[],"isDeleted":false,"isFlagged":false,"dislikes":0,"raw_message":"I may have missed something while reading, but why is a GOT necessary? Can't we use the key insight 2 technique to directly compute the address of the variable, instead having to go through the GOT? Is it because that the linker keeps the GOT relative to the text section, but is allowed to relocate the data section to non-relative locations?","createdAt":"2014-11-03T14:09:52","id":"1673818142","thread":"3005225592","depth":0,"numReports":0,"isDeletedByAuthor":false,"likes":0,"isEdited":false,"message":"\u003cp>I may have missed something while reading, but why is a GOT necessary? Can't we use the key insight 2 technique to directly compute the address of the variable, instead having to go through the GOT? Is it because that the linker keeps the GOT relative to the text section, but is allowed to relocate the data section to non-relative locations?\u003c/p>","isSpam":false,"isHighlighted":false,"points":0},{"forum":"elibenderskyswebsite","parent":1673818142,"isApproved":true,"author":{"username":"cstrahan","about":"","name":"Charles Strahan","disable3rdPartyTrackers":false,"url":"http://charlesstrahan.com/","isAnonymous":false,"rep":1.241066,"profileUrl":"https://disqus.com/by/cstrahan/","reputation":1.241066,"location":"","isPrivate":false,"isPrimary":true,"joinedAt":"2010-02-07T01:12:25","id":"1833089","avatar":{"small":{"permalink":"http://disqus.com/api/users/avatars/cstrahan.jpg","cache":"//a.disquscdn.com/uploads/users/183/3089/avatar32.jpg?1418449722"},"isCustom":true,"permalink":"http://disqus.com/api/users/avatars/cstrahan.jpg","cache":"//a.disquscdn.com/uploads/users/183/3089/avatar92.jpg?1418449722","large":{"permalink":"http://disqus.com/api/users/avatars/cstrahan.jpg","cache":"//a.disquscdn.com/uploads/users/183/3089/avatar92.jpg?1418449722"}}},"media":[],"isDeleted":false,"isFlagged":false,"dislikes":0,"raw_message":"The linker can't know ahead of time where another shared library will be loaded in memory. Remember that this is about inter-shared library calls, not intra-shared library calls. However, at load time the dynamic loader knows the offsets of any two shared libraries (it loaded them, after all), and it then needs a way to hand the offsets to the program; it does this by storing the offsets in the GOT.","createdAt":"2014-12-13T05:48:41","id":"1739923186","thread":"3005225592","depth":1,"numReports":0,"isDeletedByAuthor":false,"likes":0,"isEdited":false,"message":"\u003cp>The linker can't know ahead of time where another shared library will be loaded in memory. Remember that this is about inter-shared library calls, not intra-shared library calls. However, at load time the dynamic loader knows the offsets of any two shared libraries (it loaded them, after all), and it then needs a way to hand the offsets to the program; it does this by storing the offsets in the GOT.\u003c/p>","isSpam":false,"isHighlighted":false,"points":0}],"thread":{"feed":"https://elibenderskyswebsite.disqus.com/position_independent_code_pic_in_shared_libraries/latest.rss","uploadAdd":"//elibenderskyswebsite.disqus.com/thread/position_independent_code_pic_in_shared_libraries/async_media_upload/","identifiers":["position-independent-code-pic-in-shared-libraries"],"dislikes":0,"likes":1,"message":"","id":"3005225592","isDeleted":false,"category":"3259861","clean_title":"Position Independent Code (PIC) in shared libraries","userScore":0,"userSubscription":false,"signedLink":"http://disq.us/?url=http%3A%2F%2Feli.thegreenplace.net%2F2011%2F11%2F03%2Fposition-independent-code-pic-in-shared-libraries&key=VgHR0TT9v7Am6YNm69GhmA","createdAt":"2014-09-10T13:27:45","hasStreaming":false,"uploadRemove":"//elibenderskyswebsite.disqus.com/thread/position_independent_code_pic_in_shared_libraries/async_media_remove/","raw_message":"","isClosed":false,"link":"http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries","slug":"position_independent_code_pic_in_shared_libraries","forum":"elibenderskyswebsite","author":"3961973","posts":3,"moderators":[3961973],"title":"\n                    \n                        Position Independent Code (PIC) in shared libraries\n                    \n                ","highlightedPost":null}},"order":"asc"}</script>
+
+    
+
+    <div id="fixed-content"></div>
+
+    <script src="a_data/lounge.js" id="bootstrap-script" data-app="lounge"></script>
+
+
+<div id="layout" data-tracking-area="layout">
+
+<div id="placement-top" data-tracking-area="discovery-north"></div>
+
+<div id="onboard" data-tracking-area="onboard"></div>
+
+<div style="display: none;" id="highlighted-post" data-tracking-area="highlighted" class="highlighted-post"></div>
+
+<div id="global-alert"></div>
+
+<header id="main-nav" data-tracking-area="main-nav">
+<nav class="nav nav-primary">
+<ul>
+<li class="tab-conversation active" data-role="post-count">
+<a class="publisher-nav-color">
+<span class="comment-count">
+3 comments
+</span>
+
+<span class="comment-count-placeholder">
+Comments
+</span>
+</a>
+</li>
+<li class="tab-community">
+<a href="https://disqus.com/home/forums/elibenderskyswebsite/" class="publisher-nav-color" data-action="community-sidebar" data-forum="elibenderskyswebsite" id="community-tab">
+<span class="community-name">
+<strong>Eli Bendersky's website</strong>
+
+</span>
+
+<strong class="community-name-placeholder">Community</strong>
+</a>
+</li>
+<li class="dropdown user-menu" data-role="logout"><a href="#" class="dropdown-toggle" data-toggle="dropdown">
+<span class="dropdown-toggle-wrapper">
+
+<span>
+Login
+</span>
+
+</span> <span class="caret"></span>
+</a>
+<ul class="dropdown-menu">
+
+
+<li>
+<a href="#" data-action="auth:disqus">Disqus</a>
+</li>
+<li>
+<a href="#" data-action="auth:facebook">Facebook</a>
+</li>
+<li>
+<a href="#" data-action="auth:twitter">Twitter</a>
+</li>
+<li>
+<a href="#" data-action="auth:google">Google</a>
+</li>
+
+
+
+</ul>
+</li>
+<li class="notification-menu unread" data-role="notification-menu"><a href="https://disqus.com/home/inbox/" class="notification-container" data-action="home" data-home-path="home/inbox">
+<span class="notification-icon icon-comment" aria-hidden=""></span>
+<span class="notification-count" data-role="notification-count">1</span>
+</a>
+</li>
+</ul>
+</nav>
+</header>
+
+<section id="conversation" data-role="main" data-tracking-area="main">
+<div class="nav nav-secondary" data-tracking-area="secondary-nav">
+<ul>
+<li id="recommend-button" class="recommend dropdown">
+<div class="thread-likes"><a href="#" data-action="recommend" title="Recommend this discussion" class="dropdown-toggle ">
+<span class="icon-heart"></span>
+<span class="label label-default">Recommend</span>
+<span class="label label-recommended">Recommended</span>
+<span class="label label-count">1</span>
+</a>
+<ul class="dropdown-menu coachmark">
+<li>
+<h2>Discussion Recommended!</h2>
+<p>Recommending means this is a discussion worth sharing. It gets shared
+ to your followers' Disqus feeds, and gives the creator kudos!</p>
+<a href="http://disqus.com/home/?utm_source=disqus_embed&amp;utm_content=recommend_btn" class="btn btn-primary" target="_blank">
+ Find More Discussions 
+</a>
+</li>
+</ul>
+</div></li>
+<li id="thread-share-menu" class="dropdown share-menu hidden-sm"><a href="#" class="dropdown-toggle" data-toggle="dropdown" title="Share">
+<span class="icon-export"></span>
+<span class="label">Share</span>
+</a>
+<ul class="share-menu dropdown-menu">
+<li class="share">Share this discussion on
+<ul>
+<li class="twitter">
+<a data-action="share:twitter" href="#">Twitter</a>
+</li>
+<li class="facebook">
+<a data-action="share:facebook" href="#">Facebook</a>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li data-role="post-sort" class="dropdown sorting pull-right">
+<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+
+
+Sort by Oldest
+<span class="caret"></span>
+</a>
+<ul class="dropdown-menu pull-right">
+<li>
+<a href="#" data-action="sort" data-sort="popular">Best<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+
+<li>
+<a href="#" data-action="sort" data-sort="desc">Newest<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+
+<li class="selected">
+<a href="#" data-action="sort" data-sort="asc">Oldest<i aria-hidden="true" class="icon-checkmark"></i></a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+
+<div id="posts">
+<div id="form"><form class="reply">
+<div class="postbox">
+<div role="alert"></div>
+<div class="avatar">
+<span class="user">
+<img data-role="user-avatar" src="a_data/noavatar92.png" alt="Avatar">
+</span>
+</div>
+
+<div class="textarea-wrapper" data-role="textarea" dir="auto"><div><span class="placeholder">Join the discussion…</span><div aria-label="Join the discussion…" style="overflow: auto; max-height: 350px;" data-role="editable" aria-multiline="true" role="textbox" tabindex="0" class="textarea" contenteditable="true"><p><br></p></div><div style="display: none;"><ul class="suggestions">
+<li class="header">
+<h5>in this conversation</h5>
+</li>
+</ul>
+</div></div>
+<div data-role="drag-drop-placeholder" class="media-drag-hover" style="display: none">
+<div class="drag-text">
+⬇ Drag and drop your images here to upload them.
+</div>
+</div>
+<div class="edit-alert" role="postbox-alert"></div>
+<div class="post-actions">
+<ul class="wysiwyg">
+</ul>
+</div>
+</div>
+
+<div data-role="login-form"><div><section class="auth-section logged-out">
+<div class="connect">
+<h6>Log in with</h6>
+<ul data-role="login-menu" class="services login-buttons">
+
+
+<li class="auth-disqus">
+<button type="button" data-action="auth:disqus" title="Disqus"><i class="icon-disqus"></i></button>
+</li>
+<li class="auth-facebook">
+<button type="button" data-action="auth:facebook" title="Facebook"><i class="icon-facebook-circle"></i></button>
+</li>
+<li class="auth-twitter">
+<button type="button" data-action="auth:twitter" title="Twitter"><i class="icon-twitter-circle"></i></button>
+</li>
+<li class="auth-google">
+<button type="button" data-action="auth:google" title="Google"><i class="icon-google-plus-circle"></i></button>
+</li>
+</ul>
+</div>
+<div class="guest">
+<h6 class="guest-form-title">
+<span class="register-text"> or sign up with Disqus </span>
+<span class="guest-text"> or pick a name </span>
+</h6>
+
+<div class="what-is-disqus help-icon">
+<div id="rules" class="tooltip show">
+<h3>Disqus is a discussion network</h3>
+<ul>
+<li><span>Disqus never moderates or censors. The rules on this community are its own.</span></li>
+<li><span>Your email is safe with us. It's only used for moderation and optional notifications.</span></li>
+<li><span>Don't be a jerk or do anything illegal. Everything is easier that way.</span></li>
+</ul>
+<p class="clearfix"><a href="https://docs.disqus.com/kb/terms-and-policies/" class="btn btn-small" target="_blank">Read full terms and conditions</a></p>
+</div>
+</div>
+
+<p class="input-wrapper">
+<input dir="auto" placeholder="Name" name="display_name" id="view71_display_name" maxlength="30" type="text">
+</p>
+
+<div class="guest-details " data-role="guest-details">
+<p class="input-wrapper">
+<input dir="auto" placeholder="Email" name="email" id="view71_email" type="email">
+</p>
+
+<p class="input-wrapper">
+<input dir="auto" class="register-text" placeholder="Password" name="password" id="view71_password" type="password">
+</p>
+
+<div class="acceptance-wrapper register-text">
+By signing up, you agree to the Disqus <a target="_blank" href="https://help.disqus.com/customer/portal/articles/1753105-basic-rules-for-disqus-powered-profiles-and-discussions">Basic Rules</a>, <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466260-terms-of-service">Terms of Service</a>, and <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466259-privacy-policy">Privacy Policy</a>.
+</div>
+<div class="acceptance-wrapper guest-text">
+By posting, you agree to the Disqus <a target="_blank" href="https://help.disqus.com/customer/portal/articles/1753105-basic-rules-for-disqus-powered-profiles-and-discussions">Basic Rules</a>, <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466260-terms-of-service">Terms of Service</a>, and <a target="_blank" href="https://help.disqus.com/customer/portal/articles/466259-privacy-policy">Privacy Policy</a>.
+</div>
+
+<input name="author-guest" style="display:none" type="checkbox">
+
+<div class="proceed" data-role="submit-btn-container">
+<button type="submit" class="btn submit" aria-label="Next"><span class="icon-proceed"></span><div class="spinner"></div></button>
+</div>
+</div>
+</div>
+</section>
+
+</div></div>
+</div>
+</form></div>
+
+<button class="alert realtime" style="display: none" data-role="realtime-notification">
+</button>
+
+<div id="no-posts" style="display:none"></div>
+
+<ul id="post-list" class="post-list"><li id="post-1628411836" class="post"><div role="alert"></div>
+<div data-role="post-content" class="post-content">
+<ul class="post-menu dropdown" data-role="menu">
+<li class="collapse">
+<a href="#" data-action="collapse" title="Collapse"><span>−</span></a>
+</li>
+<li class="expand">
+<a href="#" data-action="collapse" title="Expand"><span>+</span></a>
+</li>
+
+<li class="" role="menu">
+<a class="dropdown-toggle" href="#" data-action="flag" data-role="flag" title="Flag as inappropriate">
+<i aria-hidden="true" class="icon icon-flag"></i>
+</a>
+</li>
+</ul>
+<div class="indicator"></div>
+
+<div class="avatar hovercard">
+<a href="https://disqus.com/by/disqus_pItUjCuJmX/" class="user" data-action="profile" data-username="disqus_pItUjCuJmX">
+<img data-role="user-avatar" data-user="125132459" src="a_data/noavatar92_002.png" data-src="//a.disquscdn.com/uploads/users/12513/2459/avatar92.jpg?1412923494" alt="Avatar">
+</a>
+</div>
+<div class="post-body">
+<header>
+<span class="post-byline">
+<span class="author publisher-anchor-color"><a href="https://disqus.com/by/disqus_pItUjCuJmX/" data-action="profile" data-username="disqus_pItUjCuJmX" data-role="username">이두웅</a></span>
+
+</span>
+
+<span class="post-meta">
+<span class="bullet time-ago-bullet" aria-hidden="true">•</span>
+
+<a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1628411836" data-role="relative-time" class="time-ago" title="Friday, October 10, 2014 9:46 AM">
+10 months ago
+</a>
+</span>
+
+</header>
+
+<div class="post-body-inner">
+<div class="post-message-container" data-role="message-container">
+<div class="publisher-anchor-color" data-role="message-content">
+<div class="post-message " data-role="message" dir="auto">
+<p>Nice article!! I've been looking for way to load module on my own real-time os</p>
+</div>
+
+<span class="post-media"><ul data-role="post-media-list"></ul></span>
+</div>
+</div>
+<a class="see-more hidden" title="see more" data-action="see-more">see more</a>
+</div>
+
+<footer>
+<menu>
+
+<li class="voting" data-role="voting">
+<a href="#" class="vote-up  count-0" data-action="upvote" title="Vote up">
+
+<span class="updatable count" data-role="likes">0</span>
+<span class="control"><i aria-hidden="true" class="icon icon-arrow-2"></i></span>
+</a>
+<span role="button" class="vote-down  count-0" data-action="downvote" title="Vote down">
+
+<span class="control"><i aria-hidden="true" class="icon icon-arrow"></i></span>
+</span>
+</li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="reply" data-role="reply-link">
+<a href="#" data-action="reply">
+<i class="icon icon-mobile icon-reply"></i><span class="text">Reply</span></a></li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="share">
+<a class="toggle"><i class="icon icon-mobile icon-share"></i><span class="text">Share ›</span></a>
+<ul>
+<li class="twitter"><a href="#" data-action="share:twitter">Twitter</a></li>
+<li class="facebook"><a href="#" data-action="share:facebook">Facebook</a></li>
+<li class="link"><a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1628411836">Link</a></li>
+</ul>
+</li>
+
+<li class="realtime" data-role="realtime-notification:1628411836">
+<span style="display:none;" class="realtime-replies"></span>
+<a style="display:none;" href="#" class="btn btn-small"></a>
+</li>
+
+</menu>
+</footer>
+</div>
+
+<div data-role="blacklist-form"></div>
+<div class="reply-form-container" data-role="reply-form"></div>
+</div>
+
+<ul data-role="children" class="children"></ul>
+
+</li><li id="post-1673818142" class="post"><div role="alert"></div>
+<div data-role="post-content" class="post-content">
+<ul class="post-menu dropdown" data-role="menu">
+<li class="collapse">
+<a href="#" data-action="collapse" title="Collapse"><span>−</span></a>
+</li>
+<li class="expand">
+<a href="#" data-action="collapse" title="Expand"><span>+</span></a>
+</li>
+
+<li class="" role="menu">
+<a class="dropdown-toggle" href="#" data-action="flag" data-role="flag" title="Flag as inappropriate">
+<i aria-hidden="true" class="icon icon-flag"></i>
+</a>
+</li>
+</ul>
+<div class="indicator"></div>
+
+<div class="avatar hovercard">
+<a href="https://disqus.com/by/dilanmanatunga/" class="user" data-action="profile" data-username="dilanmanatunga">
+<img data-role="user-avatar" data-user="64956233" src="a_data/noavatar92_002.png" data-src="//a.disquscdn.com/1438375549/images/noavatar92.png" alt="Avatar">
+</a>
+</div>
+<div class="post-body">
+<header>
+<span class="post-byline">
+<span class="author publisher-anchor-color"><a href="https://disqus.com/by/dilanmanatunga/" data-action="profile" data-username="dilanmanatunga" data-role="username">Dilan Manatunga</a></span>
+
+</span>
+
+<span class="post-meta">
+<span class="bullet time-ago-bullet" aria-hidden="true">•</span>
+
+<a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1673818142" data-role="relative-time" class="time-ago" title="Monday, November 3, 2014 4:09 PM">
+9 months ago
+</a>
+</span>
+
+</header>
+
+<div class="post-body-inner">
+<div class="post-message-container" data-role="message-container">
+<div class="publisher-anchor-color" data-role="message-content">
+<div class="post-message " data-role="message" dir="auto">
+<p>I may have missed something while reading, but why is a GOT 
+necessary? Can't we use the key insight 2 technique to directly compute 
+the address of the variable, instead having to go through the GOT? Is it
+ because that the linker keeps the GOT relative to the text section, but
+ is allowed to relocate the data section to non-relative locations?</p>
+</div>
+
+<span class="post-media"><ul data-role="post-media-list"></ul></span>
+</div>
+</div>
+<a class="see-more hidden" title="see more" data-action="see-more">see more</a>
+</div>
+
+<footer>
+<menu>
+
+<li class="voting" data-role="voting">
+<a href="#" class="vote-up  count-0" data-action="upvote" title="Vote up">
+
+<span class="updatable count" data-role="likes">0</span>
+<span class="control"><i aria-hidden="true" class="icon icon-arrow-2"></i></span>
+</a>
+<span role="button" class="vote-down  count-0" data-action="downvote" title="Vote down">
+
+<span class="control"><i aria-hidden="true" class="icon icon-arrow"></i></span>
+</span>
+</li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="reply" data-role="reply-link">
+<a href="#" data-action="reply">
+<i class="icon icon-mobile icon-reply"></i><span class="text">Reply</span></a></li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="share">
+<a class="toggle"><i class="icon icon-mobile icon-share"></i><span class="text">Share ›</span></a>
+<ul>
+<li class="twitter"><a href="#" data-action="share:twitter">Twitter</a></li>
+<li class="facebook"><a href="#" data-action="share:facebook">Facebook</a></li>
+<li class="link"><a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1673818142">Link</a></li>
+</ul>
+</li>
+
+<li class="realtime" data-role="realtime-notification:1673818142">
+<span style="display:none;" class="realtime-replies"></span>
+<a style="display:none;" href="#" class="btn btn-small"></a>
+</li>
+
+</menu>
+</footer>
+</div>
+
+<div data-role="blacklist-form"></div>
+<div class="reply-form-container" data-role="reply-form"></div>
+</div>
+
+<ul data-role="children" class="children"><li id="post-1739923186" class="post"><div role="alert"></div>
+<div data-role="post-content" class="post-content">
+<ul class="post-menu dropdown" data-role="menu">
+<li class="collapse">
+<a href="#" data-action="collapse" title="Collapse"><span>−</span></a>
+</li>
+<li class="expand">
+<a href="#" data-action="collapse" title="Expand"><span>+</span></a>
+</li>
+
+<li class="" role="menu">
+<a class="dropdown-toggle" href="#" data-action="flag" data-role="flag" title="Flag as inappropriate">
+<i aria-hidden="true" class="icon icon-flag"></i>
+</a>
+</li>
+</ul>
+<div class="indicator"></div>
+
+<div class="avatar hovercard">
+<a href="https://disqus.com/by/cstrahan/" class="user" data-action="profile" data-username="cstrahan">
+<img data-role="user-avatar" data-user="1833089" src="a_data/noavatar92_002.png" data-src="//a.disquscdn.com/uploads/users/183/3089/avatar92.jpg?1418449722" alt="Avatar">
+</a>
+</div>
+<div class="post-body">
+<header>
+<span class="post-byline">
+<span class="author publisher-anchor-color"><a href="https://disqus.com/by/cstrahan/" data-action="profile" data-username="cstrahan" data-role="username">Charles Strahan</a></span>
+
+<span><a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1673818142" class="parent-link" data-role="parent-link"><i aria-hidden="true" class="icon-forward" title="in reply to"></i> Dilan Manatunga</a></span>
+</span>
+
+<span class="post-meta">
+<span class="bullet time-ago-bullet" aria-hidden="true">•</span>
+
+<a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1739923186" data-role="relative-time" class="time-ago" title="Saturday, December 13, 2014 7:48 AM">
+8 months ago
+</a>
+</span>
+
+</header>
+
+<div class="post-body-inner">
+<div class="post-message-container" data-role="message-container">
+<div class="publisher-anchor-color" data-role="message-content">
+<div class="post-message " data-role="message" dir="auto">
+<p>The linker can't know ahead of time where another shared library will
+ be loaded in memory. Remember that this is about inter-shared library 
+calls, not intra-shared library calls. However, at load time the dynamic
+ loader knows the offsets of any two shared libraries (it loaded them, 
+after all), and it then needs a way to hand the offsets to the program; 
+it does this by storing the offsets in the GOT.</p>
+</div>
+
+<span class="post-media"><ul data-role="post-media-list"></ul></span>
+</div>
+</div>
+<a class="see-more hidden" title="see more" data-action="see-more">see more</a>
+</div>
+
+<footer>
+<menu>
+
+<li class="voting" data-role="voting">
+<a href="#" class="vote-up  count-0" data-action="upvote" title="Vote up">
+
+<span class="updatable count" data-role="likes">0</span>
+<span class="control"><i aria-hidden="true" class="icon icon-arrow-2"></i></span>
+</a>
+<span role="button" class="vote-down  count-0" data-action="downvote" title="Vote down">
+
+<span class="control"><i aria-hidden="true" class="icon icon-arrow"></i></span>
+</span>
+</li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="reply" data-role="reply-link">
+<a href="#" data-action="reply">
+<i class="icon icon-mobile icon-reply"></i><span class="text">Reply</span></a></li>
+<li class="bullet" aria-hidden="true">•</li>
+
+
+<li class="share">
+<a class="toggle"><i class="icon icon-mobile icon-share"></i><span class="text">Share ›</span></a>
+<ul>
+<li class="twitter"><a href="#" data-action="share:twitter">Twitter</a></li>
+<li class="facebook"><a href="#" data-action="share:facebook">Facebook</a></li>
+<li class="link"><a href="http://eli.thegreenplace.net/2011/11/03/position-independent-code-pic-in-shared-libraries/#comment-1739923186">Link</a></li>
+</ul>
+</li>
+
+<li class="realtime" data-role="realtime-notification:1739923186">
+<span style="display:none;" class="realtime-replies"></span>
+<a style="display:none;" href="#" class="btn btn-small"></a>
+</li>
+
+</menu>
+</footer>
+</div>
+
+<div data-role="blacklist-form"></div>
+<div class="reply-form-container" data-role="reply-form"></div>
+</div>
+
+<ul data-role="children" class="children"></ul>
+
+</li></ul>
+
+</li></ul>
+
+<div class="load-more" data-role="more" style="display:none">
+<a href="#" data-action="more-posts" class="btn">Load more comments</a>
+</div>
+</div>
+
+</section>
+
+<div id="placement-bottom" data-tracking-area="discovery-south"></div>
+
+<div id="footer" data-tracking-area="footer">
+<ul>
+<li class="logo"><a href="https://disqus.com/" rel="nofollow" title="Powered by Disqus">Powered by Disqus</a></li>
+<li id="thread-subscribe-button" class="email"> 
+<div class="default">
+<a href="#" rel="nofollow" data-action="subscribe" title="Subscribe and get email updates from this discussion"><i aria-hidden="true" class="icon-mail"></i><span class="clip">Subscribe</span> <i aria-hidden="true" class="icon-checkmark"></i></a>
+</div>
+<div class="form">
+<div class="input-wrapper"><input id="thread-subscribe-email" placeholder="yourname@email.com" type="email"></div>
+</div>
+</li>
+<li class="install">
+<a href="https://disqus.com/websites/?utm_source=elibenderskyswebsite&amp;utm_medium=Disqus-Footer" rel="nofollow" target="_blank">
+<i aria-hidden="true" class="icon-disqus"></i>
+<span class="clip">Add Disqus to your site</span>
+</a>
+</li>
+<li class="privacy">
+<a href="https://help.disqus.com/customer/portal/articles/1657951?utm_source=disqus&amp;utm_medium=embed-footer&amp;utm_content=privacy-btn" rel="nofollow" target="_blank">
+<i aria-hidden="true" class="icon-lock"></i>
+<span class="clip">Privacy</span>
+</a>
+</li>
+</ul>
+</div>
+</div></body></html>
