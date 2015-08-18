@@ -1,13 +1,21 @@
+make cscope files
+find . -path ./sysdeps/i386 -o -print | grep "\.[ch]$" >> cscope.files
+find . -path ./sysdeps -prune -o -print | grep "\.[ch]$" >> cscope.files
+find . -path ./sysdeps/genetic -o -print | grep "\.[chS]$" >> cscope.files
+
 OBJECT dl_random = 0x080ecfc0
 show aux vec:
 LD_SHOW_AUXV=1 sleep 1000
 
-_dl_random : csu/dl-sysdef.c
-_libc_start_main : csu/libc-start.c
 
+_libc_start_main : csu/libc-start.c
+	
+	_dl_random : csu/dl-sysdef.c
+161:		_dl_aux_init (auxvec);
+...
      we need to setup errno.  */
   __pthread_initialize_minimal ();
-
+200:
   /* Set up the stack checker's canary.  */
   uintptr_t stack_chk_guard = _dl_setup_stack_chk_guard (_dl_random); //memcpy
 # ifdef THREAD_SET_STACK_GUARD
@@ -15,5 +23,5 @@ _libc_start_main : csu/libc-start.c
 # else
   __stack_chk_guard = stack_chk_guard;
 # endif
-
+...
 
