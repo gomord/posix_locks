@@ -1,4 +1,4 @@
 all:
-	gcc -g -Wall -o mm mem_pool.c main.c 
+	gcc -g -Wall -o mm.out mem_pool.c main.c 
 clean:
-	rm mm
+	rm mm.out

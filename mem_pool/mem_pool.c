@@ -43,9 +43,9 @@ int add2pool(char *block,size_t mem_size,size_t pool_size){
 	if((int)block & 0x3 || 0 != mem_size % BLOCK_SIZE(pool_size)){
 		return -1;
 	}
-	printf("ms %d, bs %d\n",mem_size,BLOCK_SIZE(pool_size));
+	//printf("ms %d, bs %d\n",mem_size,BLOCK_SIZE(pool_size));
 	//fine empty pool
-	for(i=0;i<NR_POOLS;i+=BLOCK_SIZE(pool_size)){
+	for(i=0;i<NR_POOLS;i++){
 		if(mr.pools[i].size == pool_size){
 			break;
 		}
@@ -61,14 +61,13 @@ int add2pool(char *block,size_t mem_size,size_t pool_size){
 	}
 	pool_num = i;
 
-	printf("foune i=%d,\n",i);
+	printf("pool i=%d\n",pool_num);
 	//set up link list
 	for(i=0;
 		i<mem_size - BLOCK_SIZE(pool_size);
 		i+= BLOCK_SIZE(pool_size)){
 		PNODE(block+i)->next = PNODE(block + i + BLOCK_SIZE(pool_size));
 	}
-	printf("foune i=%d,\n",i);
 	PNODE(block + i)->next = NULL;
 	mr.pools[pool_num].head = PNODE(block);
 	mr.pools[pool_num].size = pool_size;
