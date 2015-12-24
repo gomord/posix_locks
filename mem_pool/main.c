@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "mem_pool.h"
-#define NUM_THREADS 100
+#define NUM_THREADS 10
 #define NR_ELEM 10000
 #define SIZE_MEM(pool_size) ( NR_ELEM*(sizeof(mem_node_t) + pool_size))
 char memory[SIZE_MEM(12)];
@@ -13,7 +13,7 @@ int g_inc = 0;
 void *PrintHello(void *threadid)
 {
 	long tid;
-	char *pc[100];
+	char *pc[5500];
 	int count;
 	int i,j;
 	tid = (long)threadid;
@@ -21,10 +21,10 @@ void *PrintHello(void *threadid)
 	while(1){
 	for(i=0;i<10000;i++){
 		count = 0;
-		for(j=0;j<100;j++){
+		for(j=0;j<5500;j++){
 			pc[j] = (char *)malloc(10);
 		}
-		for(j=0;j<100;j++){
+		for(j=0;j<5500;j++){
 			if(pc[j] != NULL)
 				free(pc[j]);
 			else count++;
@@ -55,12 +55,12 @@ void *BusyWork(void *t)
 
 
 int main(int argc,char *argv[]){
-	//int i=0;
-	//char *pc[NR_ELEM*2];
         init_mem();
-	printf("address %x added to mem %d\n",(int)memory,add2pool(memory,SIZE_MEM(12),12));
-	printf("address %x added to mem %d\n",(int)memory2,add2pool(memory2,SIZE_MEM(28),28));
+	printf("address %x added to mem %d\n",(int)memory,add_to_pool(memory,SIZE_MEM(12),12));
+	printf("address %x added to mem %d\n",(int)memory2,add_to_pool(memory2,SIZE_MEM(28),28));
 /*	
+	int i=0;
+	char *pc[NR_ELEM*2];
 	for(i=0;i<NR_ELEM;i++){
 		pc[i] = (char *)malloc(10);
 		printf("i=%d elem = %p\n",i,pc[i]); 
@@ -89,20 +89,20 @@ int main(int argc,char *argv[]){
 	long t;
 	void *status;
 
-	/* Initialize and set thread detached attribute */
+	// Initialize and set thread detached attribute 
 	pthread_attr_init(&attr);
 	pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_JOINABLE);
 
 	for(t=0; t<NUM_THREADS; t++) {
 	//	printf("Main: creating thread %ld\n", t);
-		rc = pthread_create(&thread[t], &attr,PrintHello/* BusyWork*/, (void *)t); 
+		rc = pthread_create(&thread[t], &attr,PrintHello, (void *)t); 
 		if (rc) {
 			printf("ERROR; return code from pthread_create() is %d\n", rc);
 			exit(-1);
 		}
 	}
 
-	/* Free attribute and wait for the other threads */
+	// Free attribute and wait for the other threads 
 	for(t=0; t<NUM_THREADS; t++) {
 		rc = pthread_join(thread[t], &status);
 		if (rc) {
@@ -115,7 +115,7 @@ int main(int argc,char *argv[]){
 
 	printf("Main: program completed. Exiting.\n");
 	pthread_attr_destroy(&attr);
-
+//*/
 
 	while(1) sleep(100);
 	pthread_exit(NULL);

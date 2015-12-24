@@ -1,13 +1,13 @@
 #include <stdio.h>
 #include "mem_pool.h"
-#define PNODE(ptr) ((mem_node_t *)(ptr))
 #define MEM(node) (node + 1)
 #define NODE(mem) (PNODE(mem) - 1)
 #define BLOCK_SIZE(size) (sizeof(mem_node_t) + size)
-
+#define COUNT_MASK 0x3
+#define PNODE(ptr) ((mem_node_t *)((size_t)(ptr) & ~COUNT_MASK))
 
  #define CAS(ptr,old,new) \
-          PNODE(__sync_bool_compare_and_swap_4(ptr,(unsigned int)old,(unsigned     int)new))
+          (__sync_bool_compare_and_swap_4(ptr,(unsigned int)old,(unsigned int)new))
 
 struct mem_root mr;
 void init_mem(void){
@@ -18,24 +18,37 @@ void init_mem(void){
 	}
 }
 static void add_node(mem_node_t **head,mem_node_t *node){
+	int i = -1;
+	size_t counter;
 	do{
+		i++;
+		counter = (size_t)*head & COUNT_MASK;
+		counter++;
 		node->next = *head;
-	}while(!CAS(head,node->next,node));
+		//remove me!!
+		if(node == NULL) break;
+	}while(!CAS(head,node->next,node | (counter & COUNT_MASK)));
+	if(i>9)	
+		printf("number of tries to add is %d \n",i);
 }
 static mem_node_t *remove_node(mem_node_t **head){
 	mem_node_t *next;
+	size_t counter;
+	int i = -1;
 //	printf("next %d head %d",next,head);
 	
 	do{
+		i++;
+		counter = (size_t)*head & COUNT_MASK;
+		counter++;
 		next = *head;
-//		printf("next %p head %pi\n",next,head); 
-		if(next == NULL) break;
-	}while(!CAS(head,next,next->next));
-	
-	return next;
-	return NULL;
+		if(PNODE(next) == NULL) break;
+	}while(!CAS(head,next,PNODE(next)->next | (counter & COUNT_MASK)));
+	if(i>500)	
+		printf("numver of tries to remove is %d \n",i);
+	return PNODE(next);
 }
-int add2pool(char *block,size_t mem_size,size_t pool_size){
+int add_to_pool(char *block,size_t mem_size,size_t pool_size){
 	int i;
 	int pool_num;
 	//check alien to 4 
@@ -95,7 +108,6 @@ void * malloc(size_t size){
 		if(mr.pools[i].size == 0){
 			break;
 		}
-		i++;
 	}
 	return NULL;
 

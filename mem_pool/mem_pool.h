@@ -17,7 +17,7 @@ struct mem_root{
 	mem_pool_t pools[NR_POOLS];
 };
 void init_mem(void);
-int add2pool(char *mem,size_t mem_size,size_t pool_size);
+int add_to_pool(char *mem,size_t mem_size,size_t pool_size);
 void * malloc(size_t size);
 void free(void *mem);
 #endif // _MEM_POOL_H
