@@ -22,12 +22,13 @@ static void add_node(mem_node_t **head,mem_node_t *node){
 	size_t counter;
 	do{
 		i++;
-		counter = (size_t)*head & COUNT_MASK;
-		counter++;
+	//	counter = (size_t)*head & COUNT_MASK;
+	//	counter++;
 		node->next = *head;
 		//remove me!!
-		if(node == NULL) break;
-	}while(!CAS(head,node->next,node | (counter & COUNT_MASK)));
+	//	if(node == NULL) break;
+	//}while(!CAS(head,node->next,node | (counter & COUNT_MASK)));
+	}while(!CAS(head,node->next,node));
 	if(i>9)	
 		printf("number of tries to add is %d \n",i);
 }
@@ -44,7 +45,7 @@ static mem_node_t *remove_node(mem_node_t **head){
 		next = *head;
 		if(PNODE(next) == NULL) break;
 	}while(!CAS(head,next,PNODE(next)->next | (counter & COUNT_MASK)));
-	if(i>500)	
+	if(i>990)	
 		printf("numver of tries to remove is %d \n",i);
 	return PNODE(next);
 }
@@ -99,7 +100,10 @@ void * malloc(size_t size){
 		if(mr.pools[i].size >= size && mr.pools[i].head != NULL){
 			//printf("found i=%d ps = %d,\n",i,mr.pools[i].size);
 			mem_free = remove_node(&mr.pools[i].head);
-			if(mem_free == NULL) i++;
+			if(mem_free == NULL){ 
+				i++;
+				continue;
+			}
 			else{ 
 				mem_free->pool = &mr.pools[i];
 				return MEM(mem_free);
@@ -108,6 +112,7 @@ void * malloc(size_t size){
 		if(mr.pools[i].size == 0){
 			break;
 		}
+		i++;
 	}
 	return NULL;
 

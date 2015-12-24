@@ -3,7 +3,7 @@
 #include <unistd.h>
 #include <pthread.h>
 #include "mem_pool.h"
-#define NUM_THREADS 10
+#define NUM_THREADS 100
 #define NR_ELEM 10000
 #define SIZE_MEM(pool_size) ( NR_ELEM*(sizeof(mem_node_t) + pool_size))
 char memory[SIZE_MEM(12)];
@@ -12,8 +12,9 @@ char memory2[SIZE_MEM(28)];
 int g_inc = 0;
 void *PrintHello(void *threadid)
 {
+#define NUM_ALLOC_PER_TH 100
 	long tid;
-	char *pc[5500];
+	char *pc[NUM_ALLOC_PER_TH];
 	int count;
 	int i,j;
 	tid = (long)threadid;
@@ -21,10 +22,10 @@ void *PrintHello(void *threadid)
 	while(1){
 	for(i=0;i<10000;i++){
 		count = 0;
-		for(j=0;j<5500;j++){
+		for(j=0;j<NUM_ALLOC_PER_TH;j++){
 			pc[j] = (char *)malloc(10);
 		}
-		for(j=0;j<5500;j++){
+		for(j=0;j<NUM_ALLOC_PER_TH;j++){
 			if(pc[j] != NULL)
 				free(pc[j]);
 			else count++;
